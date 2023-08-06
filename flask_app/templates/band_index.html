@@ -17,11 +17,11 @@
         <div class = "d-flex justified-content-evenly" style = "background-color: rgba(0, 0, 0, 0.8);">
 
             <div class = "container mask m-5">
-                <form action = "/register" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(35, 100, 138);" method = "post">
+                <form action = "/band/register" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(35, 100, 138);" method = "post">
                     <div >
                         <h2 class = "text-center text-light">Register</h2>
 
-                        <div class = "text-light bg-danger rounded-4 m-4 p-3">
+                        <div class = "text-light bg-danger rounded-4 m-4">
                             <!-- <div class = ""> -->
                                 {% with messages = get_flashed_messages(category_filter = ["category1"]) %}
                                 <!-- declare a variable called messages -->
@@ -38,11 +38,14 @@
                         </div>
     
                         <div class = "m-4">
-                            <label for = "" class = "form-label text-light">First Name:</label>
-                            <input type = "text" class = "form-control  mb-2" name = "first_name" placeholder = "Enter First Name">
+                            <label for = "name" class = "form-label text-light">Name:</label>
+                            <input type = "text" class = "form-control  mb-2" name = "name" placeholder = "Enter Band Name">
     
-                            <label for = "" class = "form-label text-light">Last Name:</label>
-                            <input type = "text" class = "form-control  mb-2" name = "last_name" placeholder = "Enter Last Name">
+                            <label for = "city" class = "form-label text-light">City:</label>
+                            <input type = "text" class = "form-control  mb-2" name = "city" placeholder = "Enter Gig City">
+
+                            <label for = "state" class = "form-label text-light">State:</label>
+                            <input type = "text" class = "form-control  mb-2" name = "state" placeholder = "Enter Gig State">
     
                             <label for = "" class = "form-label text-light">Email:</label>
                             <input type = "email" class = "form-control  mb-2" name = "email" placeholder = "Enter Email">
@@ -59,10 +62,10 @@
             </div>
     
             <div class = "container m-5">
-                <form action = "/login" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(35, 100, 138);" method = "post">
+                <form action = "/band/login" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(35, 100, 138);" method = "post">
                     <div>
                         <h2 class = "text-center text-light">Login</h2>
-                        <div class = "text-light bg-danger rounded-4 m-4 p-3">
+                        <div class = "text-light bg-danger rounded-4 m-4">
                             <!-- <div class = ""> -->
                                 {% with messages = get_flashed_messages(category_filter = ["category2"]) %}
                                 <!-- declare a variable called messages -->
