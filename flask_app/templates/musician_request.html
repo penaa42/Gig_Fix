@@ -4,20 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">    
-    <title>Musician Requests</title>
+    <title>Musician Request List</title>
 </head>
 <body>
-    <h1>band requests for muscian!!</h1>
+    <h1>Band requests!!</h1>
+    <nav class = "navbar navbar-light bg-light p-3 container">
+        <h1 class = "text-center">Requests from bands</h1>
+        <!-- <div></div> -->
+        <!-- <h2 class = "navbar-brand">All posted recipes:</h2> -->
+        <div>
+            <a class = "btn btn-success" href = "/create_page">Profile</a>
+            <a class = "btn btn-danger" href = "/logout">Logout</a>
+        </div>
+    </nav>
 
-    <div>
 
+    <div class = "d-flex">
+        <div class = "">
+            <div class = 'container'>
+                <table class = "table ">
+                    <thead>
+                        <tr>
+                            <th scope="col">Band Name</th>
+                            <th scope="col">Genre</th>
+                            <th scope="col">City</th>
+                            <th scope="col">State</th>
+                            <th scope="col">Gig Date</th>
+                            <th scope="col">Band contact</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
 
+                    <tbody>
+            for
+                        <tr>
+                            <td>name</td>
+                            <td>rock</td>
+                            <td>austin</td>
+                            <td>TX</td>
+                            <td>3/9/2020</td>
+                            <td>email.com</td>
+                            <td><a href = "">View</a> | <a href = "">Accept</a> | <a href="">Decline</a></td>
+                        </tr>
+            endfor
+                    </tbody>
+                </table>
+            </div>
 
+            <div class = "container">
+                <table class = "table ">
+                    <thead>
+                        <tr>
+                            <th scope="col">Song Chart List</th>
+                        </tr>
+                    </thead>
 
+                    <tbody>
+            for
+                        <tr>
+                            <td>title</td>
+                            <td>key</td>
+                            <td>time signature</td>
+                            <td>tempo</td>
+                        </tr>
+            endfor
+                    </tbody>
+                    <a class = "btn btn-secondary" href = "">Add Song</a>
+                </table>
 
+            </div>
+        </div>
 
-
-        
     </div>
+
+
 </body>
 </html>

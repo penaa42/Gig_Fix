@@ -7,17 +7,87 @@
     <title>Adding Song</title>
 </head>
 <body>
-    <h1>Add a song!!</h1>
-    <div>
+    <div id = "intro">
+        <div class = "d-flex justified-content-evenly" style = "background-color: rgba(0, 0, 0, 0.8);">
 
+            <div class = "container mask m-5">
+                <form action = "" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(35, 100, 138);" method = "post">
+                    <div >
+                        <h2 class = "text-center text-light">Add Profile Info</h2>
 
+                        <div class = "text-light bg-danger rounded-4 m-4 p-3">
+                            <!-- <div class = ""> -->
+                                {% with messages = get_flashed_messages(category_filter = ["category1"]) %}
+                                <!-- declare a variable called messages -->
+                                    {% if messages %}
+                                    <!-- check if there are any messages -->
+                                        {% for message in messages %}
+                                        <!-- loop through the messages -->
+                                            <p>{{message}}</p>
+                                            <!-- display each message in a paragraph tag -->
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endwith %}
+                            <!-- </div> -->
+                        </div>
+    
+                        <div class = "m-4">
+                            <label for = "" class = "form-label text-light">Profile Picture:</label>
+                            <input type = "text" class = "form-control  mb-2" name = "" placeholder = "Add a profile picture">
 
+                            <label for = "" class = "form-label text-light">Contact Info:</label>
+                            <input type = "text" class = "form-control  mb-2" name = "" placeholder = "How can you be reached?">
+                            
+                            <label for = "" class = "form-label text-light">Media Link:</label>
+                            <input type = "text" class = "form-control  mb-2" name = "" placeholder = "Enter your social media link">
+                            
+                            <label for = "" class = "form-label text-light">Available Days:</label>
+                            <input type = "text" class = "form-control  mb-2" name = "" placeholder = "List the days you're available">
 
+                            <label for = "" class = "form-label text-light">Description:</label>
+                            <input type = "text" class = "form-control  mb-2" name = "" rows = 5 placeholder = "Describe yourself">
+    
+                        </div>
+                        <button type = "submit" class = "mx-4 mb-2 btn text-light" style = "background-color: rgb(5, 3, 54);">Add</button>
+                    </div>
+                </form>
+            </div>
+    
+            <div class = "container m-5">
+                <form action = "/" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(35, 100, 138);" method = "post">
+                    <div>
+                        <h2 class = "text-center text-light">Add a Song!</h2>
+                        <div class = "text-light bg-danger rounded-4 m-4 p-3">
+                            <!-- <div class = ""> -->
+                                {% with messages = get_flashed_messages(category_filter = ["category2"]) %}
+                                <!-- declare a variable called messages -->
+                                    {% if messages %}
+                                <!-- check if there are any messages -->
+                                        {% for message in messages %}
+                                <!-- loop through the messages -->
+                                        <p>{{message}}</p>
+                                <!-- display each message in a paragraph tag -->
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endwith %}
+                                <!-- </div> -->                    
+                        </div>
 
+                        <div class = "m-4">
+                            <label for = "" class = "form-label text-light">Performance Date:</label>
+                            <input type = "date" class = "form-control mb-2" name = "email" placeholder = "When was the performance?">
+                            
+                            <label for = "" class = "form-label my-2 text-light">Location:</label>
+                            <input type = "text" class = "form-control mb-2" name = "password" placeholder = "Where was the location?">
 
-
-        
+                            <label for = "" class = "form-label my-2 text-light">Video Link:</label>
+                            <input type = "text" class = "form-control mb-2" name = "password" placeholder = "Provide a video link">
+                        </div>
+                    </div>
+                    <button type = "submit" class = "mx-4 mb-2 text-light btn" style = "background-color: rgb(5,3,54);">Post</button>
+                </form>
+            </div>
+        </div>
     </div>
-
 </body>
 </html>

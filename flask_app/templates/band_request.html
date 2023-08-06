@@ -8,18 +8,80 @@
 </head>
 <body>
     <h1>band request!!</h1>
-    <div>
+    <nav class = "navbar navbar-light bg-light p-3 container">
+        <h1 class = "text-center">Musicians</h1>
+        <!-- <div></div> -->
+        <!-- <h2 class = "navbar-brand">All posted recipes:</h2> -->
+        <div>
+            <a class = "btn btn-success" href = "/create_page">Requests Made</a>
+            <a class = "btn btn-danger" href = "/logout">Logout</a>
+        </div>
+    </nav>
 
 
+    <div class = "d-flex">
+        <div class = "">
+            <div class = 'container'>
+                <table class = "table ">
+                    <thead>
+                        <tr>
+                            <th scope="col">Musician Name</th>
+                            <th scope="col">Genre</th>
+                            <th scope="col">Years Experience</th>
+                            <th scope="col">Date Requested</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
 
+                    <tbody>
+            for
+                        <tr>
+                            <td>first_name last_name</td>
+                            <td>Genre</td>
+                            <td>Years Experience</td>
+                            <th scope="col">Date Requested</th>
+                            <td><a href = "">Delete</a> | <a href="">Rate</a></td>
+                        </tr>
+            endfor
+                    </tbody>
+                </table>
+            </div>
 
+            <div class = "container">
+                <table class = "table ">
+                    <thead>
+                        <tr>
+                            <th scope="col">Song Chart List</th>
+                        </tr>
+                    </thead>
 
+                    <tbody>
+            for
+                        <tr>
+                            <td>first_name last_name</td>
+                            <td>Genre</td>
+                            <td>Years Experience</td>
+                            <th scope="col">Date Requested</th>
+                            <td><a href = "">Edit</a> | <a href="">Delete</a></td>
+                        </tr>
+            endfor
+                    </tbody>
+                    <a class = "btn btn-secondary" href = "">Add Chart</a>
+                </table>
 
+            </div>
+        </div>
 
+        <div>
+            <h2>calendar</h2>
+            <div class = "mt-2">
+                <p>Request date</p>
+                <input type = "date" class = "form-control border-3 border-dark" name = "date_made">
+            </div>
+        </div>
 
-
-        
     </div>
+
 
 </body>
 </html>

@@ -7,195 +7,89 @@
     <title>Band Login</title>
 </head>
 <body>
-    <h1>Band index!!</h1>
-
-
-  <!--Main Navigation-->
-  <header>
     <style>
-      #intro {
-        background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
-        height: 100vh;
-      }
-
-      /* Height for devices larger than 576px */
-      @media (min-width: 992px) {
         #intro {
-          margin-top: -58.59px;
+            background-image: url(../static/Assests/stage6.webp);
         }
-      }
-
-      .navbar .nav-link {
-        color: #fff !important;
-      }
     </style>
 
-          <!--Main Navigation-->
-          <header>
-            <style>
-              #intro {
-                background-image: url(https://mdbootstrap.com/img/new/fluid/city/008.jpg);
-                height: 100vh;
-              }
-        
-              /* Height for devices larger than 576px */
-              @media (min-width: 992px) {
-                #intro {
-                  margin-top: -58.59px;
-                }
-              }
-        
-              .navbar .nav-link {
-                color: #fff !important;
-              }
-            </style>
-        
-            <!-- Navbar -->
-            <!-- <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-block" style="z-index: 2000;">
-              <div class="container-fluid"> -->
-                <!-- Navbar brand -->
-                <!-- <a class="navbar-brand nav-link" target="_blank" href="https://mdbootstrap.com/docs/standard/">
-                  <strong>MDB</strong>
-                </a>
-                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01"
-                  aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
-                  <i class="fas fa-bars"></i>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarExample01">
-                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item active">
-                      <a class="nav-link" aria-current="page" href="#intro">Home</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="https://www.youtube.com/channel/UC5CF7mLQZhvx8O5GODZAhdA" rel="nofollow"
-                        target="_blank">Learn Bootstrap 5</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="https://mdbootstrap.com/docs/standard/" target="_blank">Download MDB UI KIT</a>
-                    </li>
-                  </ul>
-        
-                  <ul class="navbar-nav d-flex flex-row"> -->
-                    <!-- Icons -->
-                    <!-- <li class="nav-item me-3 me-lg-0">
-                      <a class="nav-link" href="https://www.youtube.com/channel/UC5CF7mLQZhvx8O5GODZAhdA" rel="nofollow"
-                        target="_blank">
-                        <i class="fab fa-youtube"></i>
-                      </a>
-                    </li>
-                    <li class="nav-item me-3 me-lg-0">
-                      <a class="nav-link" href="https://www.facebook.com/mdbootstrap" rel="nofollow" target="_blank">
-                        <i class="fab fa-facebook-f"></i>
-                      </a>
-                    </li>
-                    <li class="nav-item me-3 me-lg-0">
-                      <a class="nav-link" href="https://twitter.com/MDBootstrap" rel="nofollow" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                      </a>
-                    </li>
-                    <li class="nav-item me-3 me-lg-0">
-                      <a class="nav-link" href="https://github.com/mdbootstrap/mdb-ui-kit" rel="nofollow" target="_blank">
-                        <i class="fab fa-github"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </nav> -->
-            <!-- Navbar -->
-        
-            <!-- Background image -->
-            <div id="intro" class="bg-image shadow-2-strong">
-              <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.8);">
-                <div class="container">
-                  <div class="row justify-content-center">
-                    <div class="col-xl-5 col-md-8">
-                      <form class="bg-white  rounded-5 shadow-5-strong p-5">
-                        <!-- Email input -->
-                        <div class="form-outline mb-4">
-                          <input type="email" id="form1Example1" class="form-control" />
-                          <label class="form-label" for="form1Example1">Email address</label>
+    <div id = "intro">
+        <div class = "d-flex justified-content-evenly" style = "background-color: rgba(0, 0, 0, 0.8);">
+
+            <div class = "container mask m-5">
+                <form action = "/register" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(35, 100, 138);" method = "post">
+                    <div >
+                        <h2 class = "text-center text-light">Register</h2>
+
+                        <div class = "text-light bg-danger rounded-4 m-4 p-3">
+                            <!-- <div class = ""> -->
+                                {% with messages = get_flashed_messages(category_filter = ["category1"]) %}
+                                <!-- declare a variable called messages -->
+                                    {% if messages %}
+                                    <!-- check if there are any messages -->
+                                        {% for message in messages %}
+                                        <!-- loop through the messages -->
+                                            <p>{{message}}</p>
+                                            <!-- display each message in a paragraph tag -->
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endwith %}
+                            <!-- </div> -->
                         </div>
-        
-                        <!-- Password input -->
-                        <div class="form-outline mb-4">
-                          <input type="password" id="form1Example2" class="form-control" />
-                          <label class="form-label" for="form1Example2">Password</label>
+    
+                        <div class = "m-4">
+                            <label for = "" class = "form-label text-light">First Name:</label>
+                            <input type = "text" class = "form-control  mb-2" name = "first_name" placeholder = "Enter First Name">
+    
+                            <label for = "" class = "form-label text-light">Last Name:</label>
+                            <input type = "text" class = "form-control  mb-2" name = "last_name" placeholder = "Enter Last Name">
+    
+                            <label for = "" class = "form-label text-light">Email:</label>
+                            <input type = "email" class = "form-control  mb-2" name = "email" placeholder = "Enter Email">
+    
+                            <label for = "" class = "form-label text-light">Password:</label>
+                            <input type = "password" class = "form-control  mb-2" name = "password" placeholder = "Enter Password">
+    
+                            <label for = "" class = "form-label text-light">Confirm Password:</label>
+                            <input type = "password" class = "form-control  mb-2" name = "confirm_password" placeholder = "Confirm Password">
                         </div>
-        
-                        <!-- 2 column grid layout for inline styling -->
-                        <div class="row mb-4">
-                          <div class="col d-flex justify-content-center">
-                            <!-- Checkbox -->
-                            <div class="form-check">
-                              <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
-                              <label class="form-check-label" for="form1Example3">
-                                Remember me
-                              </label>
-                            </div>
-                          </div>
-        
-                          <div class="col text-center">
-                            <!-- Simple link -->
-                            <a href="#!">Forgot password?</a>
-                          </div>
-                        </div>
-        
-                        <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-                      </form>
+                        <button type = "submit" class = "mx-4 mb-2 btn text-light" style = "background-color: rgb(5, 3, 54);">Register</button>
                     </div>
-                  </div>
-                </div>
-              </div>
+                </form>
             </div>
-            <!-- Background image -->
-          </header>
-          <!--Main Navigation-->
-        
-          <!--Footer-->
-          <!-- <footer class="bg-light text-lg-start">
-            <div class="py-4 text-center">
-              <a role="button" class="btn btn-primary btn-lg m-2"
-                href="">
-                Learn Bootstrap 5
-              </a>
-              <a role="button" class="btn btn-primary btn-lg m-2" href="">
-                Download MDB UI KIT
-              </a>
-            </div> -->
-        
-            <!-- <hr class="m-0" />
-        
-            <div class="text-center py-4 align-items-center">
-              <p>Follow MDB on social media</p>
-              <a href="" class="btn btn-primary m-1" role="button">
-                <i class="fab fa-youtube"></i>
-              </a>
-              <a href="" class="btn btn-primary m-1" role="button">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              <a href="" class="btn btn-primary m-1" role="button" rel="nofollow"
-                target="_blank">
-                <i class="fab fa-twitter"></i>
-              </a>
-              <a href="https://github.com/mdbootstrap/mdb-ui-kit" class="btn btn-primary m-1" role="button" rel="nofollow"
-                target="_blank">
-                <i class="fab fa-github"></i>
-              </a>
-            </div> -->
-        
-            <!-- Copyright -->
-            <!-- <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-              © 2020 Copyright:
-              <a class="text-dark" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-            </div> -->
-            <!-- Copyright -->
-          <!-- </footer> -->
-          <!--Footer-->
-        
-        
-        
-        
+    
+            <div class = "container m-5">
+                <form action = "/login" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(35, 100, 138);" method = "post">
+                    <div>
+                        <h2 class = "text-center text-light">Login</h2>
+                        <div class = "text-light bg-danger rounded-4 m-4 p-3">
+                            <!-- <div class = ""> -->
+                                {% with messages = get_flashed_messages(category_filter = ["category2"]) %}
+                                <!-- declare a variable called messages -->
+                                    {% if messages %}
+                                <!-- check if there are any messages -->
+                                        {% for message in messages %}
+                                <!-- loop through the messages -->
+                                        <p>{{message}}</p>
+                                <!-- display each message in a paragraph tag -->
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endwith %}
+                                <!-- </div> -->                    
+                        </div>
+
+                        <div class = "m-4">
+                            <label for = "" class = "form-label text-light">Email:</label>
+                            <input type = "email" class = "form-control mb-2" name = "email" placeholder = "Enter Email">
+                            
+                            <label for = "" class = "form-label my-2 text-light">Password:</label>
+                            <input type = "password" class = "form-control mb-2" name = "password" placeholder = "Enter Password">
+                        </div>
+                    </div>
+                    <button type = "submit" class = "mx-4 mb-2 text-light btn" style = "background-color: rgb(5,3,54);">Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
