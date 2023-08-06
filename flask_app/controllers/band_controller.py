@@ -4,6 +4,8 @@ from flask_app.models.band_model import Band
 from flask_app.models.musician_model import Musician
 from flask_bcrypt import Bcrypt
 
+import pprint
+
 bcrypt = Bcrypt(app)
 
 # home html
