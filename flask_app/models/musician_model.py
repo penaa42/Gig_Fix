@@ -2,6 +2,8 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 import re
 
+import pprint
+
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
 
 db = 'gig_fix'
@@ -21,11 +23,14 @@ class Musician:
         self.experience = data['experience']
         self.description = data['description']
         self.instrument = data['instrument']
+        self.availability = data['availability']
+        #possible delete
+        # self.profile_pic = str(data['profile_pic'])
         self.songs = []
         
 
     def __repr__(self) -> str:
-        return f'Musician Repr ---------------> ID: {self.id} FIRST NAME: {self.first_name}: Recipes {self.songs}'
+        return f'Musician Repr ---------------> ID: {self.id} FIRST NAME: {self.first_name} SONGS: {self.songs}'
 
 
 ###############################################################################################3
@@ -59,6 +64,10 @@ class Musician:
             flash('Experience cannot be less than 0!', 'category1')
             is_valid = False
 
+        if len(form_data['availability']) < 3:
+            flash('Availability cannot be less than 3 characters!', 'category1')
+            is_valid = False
+
         if len(form_data['password']) < 8:
             flash('Password must be at least 8 characters long!', 'category1')
             is_valid = False
@@ -71,6 +80,10 @@ class Musician:
             flash('Invalid email/password!', 'category1')
             is_valid = False
 
+        # if len(form_data['profile_pic']) == 0:
+        #     flash('Please select profile picture', 'category1')
+        #     is_valid = False
+
         return is_valid
 
 
@@ -82,7 +95,8 @@ class Musician:
 
         # should get back a list(one) of dict---> email does exist
         # should get back an empty list if email doesn't exist
-        print('----------FIND MUSICIAN EMAIL DB RESPONSE------------',db_response)
+        print('----------FIND MUSICIAN EMAIL DB RESPONSE------------')
+        pprint.pprint(db_response)
 
         if len(db_response) < 1:
             return False
@@ -95,10 +109,11 @@ class Musician:
 # CREATE MUSICIAN         musician_controller; route: /musician/register; INSERT QUERY(request.form input)
     @classmethod
     def create_musician(cls, request_form_data):
-        query = "INSERT INTO musicians (first_name, last_name, genre, city, state, experience, description, instrument, email, password) VALUES (%(first_name)s, %(last_name)s, %(genre)s, %(city)s, %(state)s, %(experience)s, %(description)s, %(instrument)s, %(email)s, %(password)s);"
+        query = "INSERT INTO musicians (first_name, last_name, genre, city, state, experience, description, instrument, availability, email, password) VALUES (%(first_name)s, %(last_name)s, %(genre)s, %(city)s, %(state)s, %(experience)s, %(description)s, %(instrument)s, %(availability)s, %(email)s, %(password)s);"
         db_response = connectToMySQL(db).query_db(query, request_form_data)
 
-        print('-----------CREATE MUSICIAN DB RESPONSE-----------', db_response)
+        print('-----------CREATE MUSICIAN DB RESPONSE-----------')
+        pprint.pprint(db_response)
         return db_response
 
 
@@ -109,13 +124,14 @@ class Musician:
         query = "SELECT * FROM musicians;"
         db_response = connectToMySQL(db).query_db(query)
 
-        print('--------------GET ALL MUSICIANS DB RESPONSE------------', db_response)
+        print('--------------GET ALL MUSICIANS DB RESPONSE------------')
+        pprint.pprint(db_response)
 #       list of car class instances for html loop
         musicians= []
 
-        # for musician in db_response:
-        #     new_musician = cls(musician)
-        #     musicians.append(new_musician)
+        for musician in db_response:
+            new_musician = cls(musician)
+            musicians.append(new_musician)
 
         # for musician in db_response:
 #           reconstruct dict data to grab correct id in db_response for Car class (class association setup)
@@ -147,6 +163,8 @@ class Musician:
 
 #         # print('---------CHECKING LIST OF CAR INSTANCES IN GET ALL----------')
 #         pprint.pprint(cars)
+        print('-----CHECKING GET ALL MUSICIANS LIST-----')
+        pprint.pprint(musicians)
 
         return musicians
 
@@ -155,11 +173,71 @@ class Musician:
 
 
 
+########################################################
+# SHOW MUSICIAN         musician_controller; route: /profile; input id_data dict; SELECT QUERY(musician_id input)
+    @classmethod
+    def show_musician(cls, show_data):
+        query = "SELECT * FROM musicians WHERE id = %(id)s;"
+        db_response = connectToMySQL(db).query_db(query, show_data)
+
+        print('----------SHOW MUSICIAN DB RESPONSE----------')
+        pprint.pprint(db_response)
+
+        musician_first_name = db_response[0]['first_name']
+        print('----------SHOW USER FIRST NAME----------')
+        pprint.pprint(musician_first_name)
+
+        for musician in db_response:
+            new_musician = cls(musician)
+            # musicians.append(new_musician)
+
+        return new_musician
 
 
 
+    @staticmethod
+    def validate_musician_update(form_data):
+        is_valid = True
 
+        if len(form_data['first_name']) < 2:
+            flash('First name must be at least 2 characters long!', 'category1')
+            is_valid = False
 
+        if len(form_data['last_name']) < 2:
+            flash('Last name must be at least 2 characters long!', 'category1')
+            is_valid = False
+
+        if len(form_data['genre']) < 2:
+            flash('Genre must be at least 2 characters long!', 'category1')
+            is_valid = False
+
+        if len(form_data['city']) < 2:
+            flash('City must be at least 2 characters long!', 'category1')
+            is_valid = False
+
+        if len(form_data['state']) != 2:
+            flash('Please use state abbreviation!', 'category1')
+            is_valid = False
+
+        if len(form_data['experience']) < 0:
+            flash('Experience cannot be less than 0!', 'category1')
+            is_valid = False
+
+        if len(form_data['availability']) < 3:
+            flash('Availability cannot be less than 3 characters!', 'category1')
+            is_valid = False
+
+        return is_valid
+########################################################
+# UPDATE MUSICIAN        musician_controller; route: /profile/update; input html request.form
+    @classmethod
+    def update_profile(cls, request_form_data):
+        print('-----------UPDATE DATA INTO CLASSMETHOD-----------')
+        pprint.pprint(request_form_data)
+        query = "UPDATE musicians SET first_name = %(first_name)s, last_name = %(last_name)s, genre = %(genre)s, city = %(city)s, state = %(state)s, experience = %(experience)s, instrument = %(instrument)s, availability = %(availability)s, description = %(description)s WHERE id = %(id)s;"
+        db_response = connectToMySQL(db).query_db(query, request_form_data)
+
+        return db_response
 
 
 

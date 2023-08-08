@@ -4,63 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">    
-    <title>Adding Chart</title>
+    <title>Edit Song</title>
 </head>
-<body>
-    <h1>adding a chart!!</h1>
+<body style = "background-color: rgba(0, 0, 0, 0.8);">
+    <!-- <p> song id: song.id</p> -->
+    <div class = "container mask m-5 mx-auto w-50">
+        <form action = "/profile/update/song" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(204, 190, 139);" method = "post">
+            <input type = "hidden" name = "musician_id" value = "{{ session.musician_id }}">
+            <input type = "hidden" name = "song_id" value = "{{ song.id }}">
+            <!-- <input type = "hidden" name = "password" value = " session.musician.password "> -->
+            <div class = "">
+                <h1 class = "text-center">Edit Performance</h1>
+                <div class = "text-light bg-danger rounded-4 m-4">
+                    <!-- <div class = ""> -->
+                        {% with messages = get_flashed_messages() %}
+                        <!-- declare a variable called messages -->
+                            {% if messages %}
+                            <!-- check if there are any messages -->
+                                {% for message in messages %}
+                                <!-- loop through the messages -->
+                                    <p>{{message}}</p>
+                                    <!-- display each message in a paragraph tag -->
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    <!-- </div> -->
+                </div>
 
-    <nav>
+                <!-- <p>musician id: {{ session.musician_id }}</p> -->
+                <p>song id: {{ song.id }} </p>
+                <div class = "m-4">
+                    <label for = "date" class = "form-label">Date Performed:</label>
+                    <input type = "date" class = "form-control  mb-2 " name = "date" value = "{{ song.date }}">
 
-    </nav>
+                    <label for = "city" class = "form-label">City:</label>
+                    <input type = "text" class = "form-control  mb-2 " name = "city" value = "{{ song.city }}">
 
+                    <label for = "state" class = "form-label">State:</label>
+                    <input type = "text" class = "form-control  mb-2 " name = "state" value = "{{ song.state }}">
 
-    <div id = "intro">
-        <div class = "d-flex justified-content-evenly" style = "background-color: rgba(0, 0, 0, 0.8);">
-
-            <div class = "container mask m-5">
-                <form action = "" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(35, 100, 138);" method = "post">
-                    <div >
-                        <h2 class = "text-center text-light">Add Profile Info</h2>
-
-                        <div class = "text-light bg-danger rounded-4 m-4 p-3">
-                            <!-- <div class = ""> -->
-                                {% with messages = get_flashed_messages(category_filter = ["category1"]) %}
-                                <!-- declare a variable called messages -->
-                                    {% if messages %}
-                                    <!-- check if there are any messages -->
-                                        {% for message in messages %}
-                                        <!-- loop through the messages -->
-                                            <p>{{message}}</p>
-                                            <!-- display each message in a paragraph tag -->
-                                        {% endfor %}
-                                    {% endif %}
-                                {% endwith %}
-                            <!-- </div> -->
-                        </div>
-    
-                        <div class = "m-4">
-                            <label for = "" class = "form-label text-light">Title:</label>
-                            <input type = "text" class = "form-control  mb-2" name = "" placeholder = "What's the title?">
-
-                            <label for = "" class = "form-label text-light">Key:</label>
-                            <input type = "text" class = "form-control  mb-2" name = "" placeholder = "What key?">
-                            
-                            <label for = "" class = "form-label text-light">Time Signature:</label>
-                            <input type = "text" class = "form-control  mb-2" name = "" placeholder = "What time signature?">
-                            
-                            <label for = "" class = "form-label text-light">Tempo:</label>
-                            <input type = "text" class = "form-control  mb-2" name = "" placeholder = "How fast or slow?">
-    
-                        </div>
-                        <button type = "submit" class = "mx-4 mb-2 btn text-light" style = "background-color: rgb(5, 3, 54);">Add</button>
-                    </div>
-                </form>
+                    <label for = "link" class = "form-label">Link:</label>
+                    <input type = "text" class = "form-control  mb-2 " name = "link" value = "{{ song.link }}">
+                </div>
+                <button type = "submit" class = "mx-4 mb-2 btn btn-primary">Update</button>
             </div>
-    
-        </div>
+        </form>
     </div>
-
-
-
 </body>
 </html>

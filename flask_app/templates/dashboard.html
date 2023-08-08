@@ -49,13 +49,13 @@
         <!-- <div></div> -->
         <!-- <h2 class = "navbar-brand">All posted recipes:</h2> -->
         <div>
-            <a class = "btn btn-success" href = "">Requests Made</a>
-            <a class = "btn btn-danger" href = "">Logout</a>
+            <a class = "btn btn-success" href = "/band/requests">Requests Made</a>
+            <a class = "btn btn-danger" href = "/logout">Logout</a>
         </div>
     </nav>
-
+    <p>looking for band id: {{ session.band_id }}</p>
     <div class = 'container'>
-        <table class = "table table-striped">
+        <table class = "table table-striped text-center">
             <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -70,18 +70,18 @@
             </thead>
 
             <tbody>
-    <!-- for -->
-                <tr>
-                    <td>first_name last_name</td>
-                    <td>instrument</td>
-                    <td>Genre</td>
-                    <td>City</td>
-                    <td>State</td>
-                    <td>Years Experience</td>
-                    <td>Rating</td>
-                    <td><a href = "">View</a></td>
-                </tr>
-    <!-- endfor -->
+                {% for musician in musicians %}
+                    <tr>
+                        <td> {{ musician.first_name }} {{ musician.last_name }} </td>
+                        <td> {{ musician.instrument }} </td>
+                        <td> {{ musician.genre }} </td>
+                        <td> {{ musician.city }} </td>
+                        <td> {{ musician.state }} </td>
+                        <td> {{ musician.experience }} </td>
+                        <td>  Rating</td>
+                        <td><a href = "/profile/{{musician.id}}">View musician's id: {{musician.id}}</a></td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
 

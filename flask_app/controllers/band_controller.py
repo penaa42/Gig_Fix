@@ -2,6 +2,7 @@ from flask_app import app
 from flask import render_template, redirect, request, session, flash
 from flask_app.models.band_model import Band
 from flask_app.models.musician_model import Musician
+from flask_app.models.song_model import Song
 from flask_bcrypt import Bcrypt
 
 import pprint
@@ -40,7 +41,8 @@ def band_register():
     session['band_id'] = band_id
 
     session['name'] = request.form['name']
-    print('------------BAND SESSION NAME IN REGISTER-----------', session['name'])
+    print('------------BAND SESSION NAME IN REGISTER-----------')
+    pprint.pprint(session['name'])
 
     return redirect('/dashboard')
 
@@ -75,15 +77,76 @@ def band_login():
     return redirect('/dashboard')
 
 
-
 # DASHBOARD: DISPLAY ALL MUSICIANS
 @app.route('/dashboard')
 def dashboard():
-    if not 'band_id' in session:
-        print('FAILED DASHBOARD SESSION VALIDATION')
-        return redirect('/band')
+    # if not 'band_id' in session:
+    #     print('FAILED DASHBOARD SESSION VALIDATION')
+    #     return redirect('/band')
 
-    return render_template('dashboard.html')
-                        #    , musicians = Musician.get_all())
+    return render_template('dashboard.html', musicians = Musician.get_all())
+
+
+@app.route('/profile/<int:musician_id>')
+def view_profile(musician_id):
+
+    # musician_id = session['musician_id']
+
+# DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
+    # if not 'user_id' in session:
+    #     print('FAILED DASHBOARD SESSION VALIDATION')
+    #     return redirect('/')
+
+    # session['band_id'] = 
+
+    id_data = {
+        'id' : musician_id
+    }
+
+    musician = Musician.show_musician(id_data)
+
+    print('---------------MUSICIAN INFO PASSED TO HTML---------------')
+    pprint.pprint(musician)
+
+    # songs = Song.get_songs_w_musician()
+
+    return render_template('profile.html', musician = musician, songs = Song.get_songs_w_musician())
+###########################################################################################################
+
+
+@app.route('/band/requests')
+def band_requests():
+    
+    
+    return render_template('band_request.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

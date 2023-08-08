@@ -2,6 +2,8 @@ from flask_app.config.mysqlconnection import connectToMySQL
 from flask import flash
 import re
 
+import pprint
+
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
 
 db = 'gig_fix'
@@ -19,7 +21,7 @@ class Band:
         self.charts = []
 
     def __repr__(self) -> str:
-        return f'Band Repr ---------------> ID: {self.id} NAME: {self.name}: Charts {self.charts}'
+        return f'Band Repr ---------------> ID: {self.id} NAME: {self.name} CHARTS: {self.charts}'
 
 ###############################################################################################3
 # VALIDATE BAND REGISTER       band_controller; route: /band/register
@@ -62,7 +64,8 @@ class Band:
 
         # should get back a list(one) of dict---> email does exist
         # should get back an empty list if email doesn't exist
-        print('----------FIND BAND EMAIL DB RESPONSE------------',db_response)
+        print('----------FIND BAND EMAIL DB RESPONSE------------')
+        pprint.pprint(db_response)
 
         if len(db_response) < 1:
             return False
@@ -78,6 +81,7 @@ class Band:
         query = "INSERT INTO bands (name, city, state, email, password) VALUES (%(name)s, %(city)s, %(state)s, %(email)s, %(password)s);"
         db_response = connectToMySQL(db).query_db(query, request_form_data)
 
-        print('-----------CREATE BAND DB RESPONSE-----------', db_response)
+        print('-----------CREATE BAND DB RESPONSE-----------')
+        pprint.pprint(db_response)
         return db_response
     
