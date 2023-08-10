@@ -12,13 +12,14 @@
             <div class = "container-fluid mx-2">
                 {% if session.band_id == musician_id %}
                     <a class = "navbar-brand btn text-light" style = "background-color: rgb(204, 190, 139);" href = "/profile/edit/{{musician.id}}">Edit Profile</a>
+                {% elif session.band_id %}
+                    <h1>{{ musician.first_name }} {{ musician.last_name }}</h1>
                 {% else %}
-                    <div></div>
                 {% endif %}
                 <ul class = "navbar-nav mb-2 mb-lg-0">
                     <li class = "nav-item">
                         {% if session.band_id == musician_id %}
-                            <a class = " btn mx-2 text-light" style = "background-color: rgb(204, 190, 139);" href = "/profile/requests">Gig Requests</a>
+                            <a class = " btn mx-2 text-light" style = "background-color: rgb(204, 190, 139);" href = "/profile/requests/{{musician.id}}">Gig Requests</a>
                         {% else %}
                             <a class = " btn mx-2 text-light" style = "background-color: rgb(35, 100, 138);" href = "/dashboard">Dashboard</a>
                         {% endif %}
@@ -96,11 +97,11 @@
                         </tbody>
                     </table>
 
-                    <form class = "mt-5" action = "">
-                        <input type = "date" class = "form-control border-3" name = "date_made">
-                        {% if session.musician_id %}
-
-                        {% elif session.band_id %}
+                    <form class = "mt-5" action = "/band/gig/request" method = "post">
+                        <input type = "hidden" name = "musician_id" value = "{{ musician.id }}">
+                        <input type = "hidden" name = "band_id" value = "{{ session.band_id }}">
+                        {% if session.band_id %}
+                            <!-- <input type = "date" class = "form-control border-3" name = "date"> -->
                             <button type = "submit" class = "btn btn-success mt-3 text-center">Submit Request</button>
                         
                             <!-- <button type = "submit" class = "btn btn-primary mt-3 text-center">Request Date</button> -->

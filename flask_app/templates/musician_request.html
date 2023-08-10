@@ -13,7 +13,7 @@
         <!-- <div></div> -->
         <!-- <h2 class = "navbar-brand">All posted recipes:</h2> -->
         <div>
-            <a class = "btn" style = "background-color: rgb(204, 190, 139);" href = "/profile">Profile</a>
+            <a class = "btn text-light" style = "background-color: rgb(204, 190, 139);" href = "/profile">Profile</a>
             <a class = "btn btn-danger" href = "/logout">Logout</a>
         </div>
     </nav>
@@ -26,27 +26,26 @@
                     <thead>
                         <tr>
                             <th scope="col">Band Name</th>
-                            <th scope="col">Genre</th>
+                            <!-- <th scope="col">Genre</th> -->
                             <th scope="col">City</th>
                             <th scope="col">State</th>
-                            <th scope="col">Gig Date</th>
-                            <th scope="col">Band contact</th>
+                            <!-- <th scope="col">Gig Date</th> -->
+                            <!-- <th scope="col">Band contact</th> -->
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
-            for
-                        <tr>
-                            <td>name</td>
-                            <td>rock</td>
-                            <td>austin</td>
-                            <td>TX</td>
-                            <td>3/9/2020</td>
-                            <td>email.com</td>
-                            <td><a href = "">View</a> | <a href = "">Accept</a> | <a href="">Decline</a></td>
-                        </tr>
-            endfor
+            {% for band in bands %}
+                <tr>
+                    <td>{{ band.name }}</td>
+                    <td>{{ band.city }}</td>
+                    <td>{{ band.state }}</td>
+                    <!-- <td>3/9/2020</td> -->
+                    <!-- <td>email.com</td> -->
+                    <td><a href = "">View</a> | <a href = "">Accept</a> | <a href="">Decline</a></td>
+                </tr>
+            {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -60,14 +59,14 @@
                     </thead>
 
                     <tbody>
-            for
+            <!-- for -->
                         <tr>
                             <td>title</td>
-                            <td>key</td>
+                            <td>chart_key</td>
                             <td>time signature</td>
                             <td>tempo</td>
                         </tr>
-            endfor
+            <!-- endfor -->
                     </tbody>
                     <a class = "btn btn-secondary" href = "">View Charts</a>
                 </table>

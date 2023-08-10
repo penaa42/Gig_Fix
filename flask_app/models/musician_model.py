@@ -1,4 +1,5 @@
 from flask_app.config.mysqlconnection import connectToMySQL
+from flask_app.models import band_model
 from flask import flash
 import re
 
@@ -27,7 +28,7 @@ class Musician:
         #possible delete
         # self.profile_pic = str(data['profile_pic'])
         self.songs = []
-        
+
 
     def __repr__(self) -> str:
         return f'Musician Repr ---------------> ID: {self.id} FIRST NAME: {self.first_name} SONGS: {self.songs}'
@@ -148,7 +149,7 @@ class Musician:
 # #                leave out seller class association
 #             }
 
-#           car dict turned into car class instance (no class association yet)
+#           band dict turned into band class instance (no class association yet)
 #             new_ = cls(car_data)
 #             # print('----------CAR DATA INTO NEW CAR CLASS----------')
 #             pprint.pprint(new_car)
@@ -242,18 +243,46 @@ class Musician:
 
 
 
+########################################################
+# GET MUSICIAN WITH BANDS     musician_controller; input: musician_id; route: /profile/requests/<int:musician_id>
+    @classmethod
+    def get_all_band_w_musician(cls, musician_id_dict):
+
+        print('-----JOIN QUERY DICT-----')
+        pprint.pprint(musician_id_dict)
+
+        query = "SELECT * FROM bands JOIN bands_musicians ON bands.id = bands_musicians.band_id JOIN musicians ON musicians.id = bands_musicians.musician_id;"
+        # print(query)
+
+        db_response = connectToMySQL(db).query_db(query)
+
+        print('-------MUSICIAN WITH BANDS DB RESPONSE--------')
+        pprint.pprint(db_response)
+
+        bands = []
+
+        for band_and_musician in db_response:
+            if band_and_musician['musician_id'] == musician_id_dict['id']:
+                band_data = {
+                    'id' : band_and_musician['band_id'],
+                    'name' : band_and_musician['name'],
+                    'city' : band_and_musician['city'],
+                    'state' : band_and_musician['state'],
+                    'email' : band_and_musician['email'],
+                    'password' : band_and_musician['password'],
+                    'created_at' : band_and_musician['created_at'],
+                    'updated_at' : band_and_musician['updated_at']
+                }
+
+                new_band = band_model.Band(band_data)
+                print('----------BAND DATA INTO NEW BAND CLASS----------')
+                pprint.pprint(new_band)
+
+                bands.append(new_band)
+
+        print('---------CHECKING LIST OF REQUESTS INSTANCES IN GET ALL----------')
+        pprint.pprint(bands)
+
+        return bands
 
 
-
-
-
-
-
-    # @classmethod
-    # def rename(cls):
-    #     query = "SELECT * FROM users;"
-    #     results = connectToMySQL(db).query_db(query)
-    #     #Nice little head start
-    #     #Rest of code here
-    #     print(results)
-    #     return "Something here"

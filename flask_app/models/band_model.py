@@ -1,4 +1,5 @@
 from flask_app.config.mysqlconnection import connectToMySQL
+from flask_app.models import musician_model
 from flask import flash
 import re
 
@@ -85,3 +86,104 @@ class Band:
         pprint.pprint(db_response)
         return db_response
     
+
+# CREATE GIG REQUEST        band_controller; route /band/gig/request; INSERT QUERY(request.form input)
+    @classmethod
+    def create_gig_request(cls, request_form_data):
+
+        print('----GIG REQUEST FORM DATA------')
+        pprint.pprint(request_form_data)
+
+        query = "INSERT INTO bands_musicians (band_id, musician_id) VALUES (%(band_id)s, %(musician_id)s);"
+        db_response = connectToMySQL(db).query_db(query, request_form_data)
+
+        print('------GIG REQUEST DB RESPONSE-----')
+        pprint.pprint(db_response)
+
+        return
+
+
+
+########################################################
+# GET BANDS WITH MUSICIANS     band_controller; input: band_id; route: /band/requests/<int:band_id>?
+    @classmethod
+    def get_all_musician_w_band(cls, band_id_dict):
+
+        print('-----JOIN QUERY DICT-----')
+        pprint.pprint(band_id_dict)
+
+        # query = "SELECT * FROM bands JOIN bands_musicians ON bands.id = bands_musicians.band_id JOIN musicians ON musicians.id = bands_musicians.musician_id;"
+
+        query = "SELECT * FROM musicians JOIN bands_musicians ON musicians.id = bands_musicians.musician_id JOIN bands ON bands.id = bands_musicians.band_id"
+        print(query)
+
+
+
+
+
+        db_response = connectToMySQL(db).query_db(query)
+
+        print('-------BAND WITH MUSICIAN DB RESPONSE--------')
+        pprint.pprint(db_response)
+
+        musicians = []
+
+        for musician_and_band in db_response:
+            if musician_and_band['band_id'] == band_id_dict['id']:
+                musician_data = {
+                    'id' : musician_and_band['musician_id'],
+                    'first_name' : musician_and_band['first_name'],
+                    'last_name' : musician_and_band['last_name'],
+                    'email' : musician_and_band['email'],
+                    'password' : musician_and_band['password'],
+                    'created_at' : musician_and_band['created_at'],
+                    'updated_at' : musician_and_band['updated_at'],
+                    'genre' : musician_and_band['genre'],
+                    'city' : musician_and_band['city'],
+                    'state' : musician_and_band['state'],
+                    'experience' : musician_and_band['experience'],
+                    'description' : musician_and_band['description'],
+                    'instrument' : musician_and_band['instrument'],
+                    'availability' : musician_and_band['availability']
+                }
+
+                new_musician = musician_model.Musician(musician_data)
+                print('----------BAND DATA INTO NEW BAND CLASS----------')
+                pprint.pprint(new_musician)
+
+                musicians.append(new_musician)
+
+        print('---------CHECKING LIST OF REQUESTS INSTANCES IN GET ALL----------')
+        pprint.pprint(musicians)
+
+        return musicians
+        # return
+
+
+########################################################
+# SHOW BAND         band_controller; route: /band/requests/; input band_id_data dict; SELECT QUERY(band_id input)
+    @classmethod
+    def show_band(cls, show_data):
+        query = "SELECT * FROM BANDS WHERE id = %(id)s;"
+        db_response = connectToMySQL(db).query_db(query, show_data)
+
+        print('----------SHOW BAND DB RESPONSE----------')
+        pprint.pprint(db_response)
+
+        band_name = db_response[0]['name']
+        print('----------SHOW USER FIRST NAME----------')
+        pprint.pprint(band_name)
+
+        for band in db_response:
+            new_band = cls(band)
+            # musicians.append(new_musician)
+
+        return new_band
+
+
+
+
+
+
+
+

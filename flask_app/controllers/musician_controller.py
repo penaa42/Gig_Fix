@@ -260,9 +260,18 @@ def delete_song(song_id):
     return redirect('/profile')
 
 
-@app.route('/profile/requests')
-def request_page():
+@app.route('/profile/requests/<int:musician_id>')
+def request_page(musician_id):
 # call a join request for musician and band
+    print('----CHECKING FOR MUSICIAN ID IN GIG REQUESTS----')
+    pprint.pprint(musician_id)
+
+    musician_id_dict = {
+        'id' : session['musician_id']
+    }
+
+    print('----MUSICIAN ID DICT-----')
+    pprint.pprint(musician_id_dict)
 
 
 # pass in band and chart query
@@ -270,7 +279,7 @@ def request_page():
 
 # pass request to html
 
-    return render_template('musician_request.html')
+    return render_template('musician_request.html', bands = Musician.get_all_band_w_musician(musician_id_dict))
 
 
 

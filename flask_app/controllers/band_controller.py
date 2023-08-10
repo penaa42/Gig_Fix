@@ -3,6 +3,7 @@ from flask import render_template, redirect, request, session, flash
 from flask_app.models.band_model import Band
 from flask_app.models.musician_model import Musician
 from flask_app.models.song_model import Song
+from flask_app.models.chart_model import Chart
 from flask_bcrypt import Bcrypt
 
 import pprint
@@ -114,15 +115,53 @@ def view_profile(musician_id):
 ###########################################################################################################
 
 
-@app.route('/band/requests')
+@app.route('/band/requests/')
 def band_requests():
+    print('-----SESSION BAND ID FOR JOIN------')
+    pprint.pprint(session['band_id'])
+
+    band_id = session['band_id']
+
+# call a join request for musician and band
+
+    band_id_dict = {
+        'id' : band_id
+    }
+
+    print('----BAND ID DICT-----')
+    pprint.pprint(band_id_dict)
+
+    band = Band.show_band(band_id_dict)
+
+
+# pass in band and chart query
+
+
+# pass request to html
+
+
+
+
+    # return
+    return render_template('band_request.html', musicians = Band.get_all_musician_w_band(band_id_dict), charts = Chart.get_charts_w_band(), band = band)
+
+
+
+
+
+
     
-    
-    return render_template('band_request.html')
+    # return render_template('band_request.html')
 
 
+@app.route('/band/gig/request', methods = ['POST'])
+def create_gig_request():
+    print('------REQUEST DATE FORM DATA------')
+    pprint.pprint(request.form)
 
+    Band.create_gig_request(request.form)
 
+    return redirect('/band/requests')
 
 
 
