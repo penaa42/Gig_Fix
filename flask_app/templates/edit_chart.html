@@ -8,7 +8,7 @@
 </head>
 <body style = "background-color: rgba(0, 0, 0, 0.8);">
     <div class = "container mask m-5 mx-auto w-50">
-        <form action = "/band/update_chart" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(35, 100, 138);" method = "post">
+        <form action = "/band/update/chart" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(35, 100, 138);" method = "post">
             <input type = "hidden" name = "band_id" value = "{{ session.band_id }}">
             <input type = "hidden" name = "chart_id" value = "{{ chart.id }}">
             <div >
@@ -31,19 +31,19 @@
 
                 <div class = "m-4">
                     <label for = "title" class = "form-label text-light">Title:</label>
-                    <input type = "text" class = "form-control" name = "title" placeholder = "What's the title?">
+                    <input type = "text" class = "form-control" name = "title" value = "{{ chart.title }}">
                     <br/>
 
                     <label for = "chart_key" class = "form-label text-light">Key:</label>
-                    <input type = "text" class = "form-control" name = "chart_key" placeholder = "What key?">
+                    <input type = "text" class = "form-control" name = "chart_key" value = "{{ chart.chart_key }}">
                     <br/>
 
                     <label for = "time_signature" class = "form-label text-light">Time Signature:</label>
-                    <input type = "text" class = "form-control" name = "time_signature" placeholder = "What time signature?">
+                    <input type = "text" class = "form-control" name = "time_signature" value = "{{ chart.time_signature }}">
                     <br/>
 
                     <label for = "tempo" class = "form-label text-light">Tempo:</label>
-                    <input type = "number" class = "form-control  mb-2" name = "tempo" min = "1" placeholder = "How fast or slow?">
+                    <input type = "number" class = "form-control  mb-2" name = "tempo" min = "1" value = "{{ chart.tempo }}">
                 </div>
             </div>
             <button type = "submit" class = "mx-4 mb-2 btn text-light" style = "background-color: rgb(5, 3, 54);">Update</button>

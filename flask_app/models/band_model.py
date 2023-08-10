@@ -182,8 +182,25 @@ class Band:
 
 
 
+########################################################
+# DELETE MUSICIANS FROM BAND REQUESTS     band_controller; input: band_id; route: /band/requests/<int:band_id>?
+    @classmethod
+    def delete_musician_w_band(cls, delete_data):
+
+        print('-----DELETE QUERY DICT-----')
+        pprint.pprint(delete_data)
+
+    #  grab id where band_id and musician_id are the same
 
 
+        # query = "DELETE FROM bands_musicians WHERE id = %(id)s;"
+        # print(query)
+
+        # db_response = connectToMySQL(db).query_db(query)
+
+        # print('----DELETE MUSICIAN REQUEST DB RESPONSE-----')
+        # pprint.pprint(db_response)
 
 
+        return
 

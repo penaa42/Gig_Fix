@@ -167,11 +167,44 @@ def create_gig_request():
 
 
 
+########################################################
+# DELETE CHART        input: html band_requests, view chart, chart_id
+
+@app.route('/band/delete_chart/<int:chart_id>')
+def delete_chart(chart_id):
+
+    print('----------CHECKING SHOW DELETE ID------------')
+    pprint.pprint(chart_id)
+
+    delete_data = {
+        'id' : chart_id
+    }
+
+    Chart.delete_chart(delete_data)
+    # Car.delete_car(delete_data)
+
+    return redirect('/band/requests/')
 
 
 
 
+########################################################
+# DELETE MUSICIAN REQUEST        input: html band_requests, view , band_id musician_id
 
+@app.route('/band/delete/musician/<int:musician_id>')
+def delete_musician_request(musician_id):
+
+    print('----------CHECKING JOIN DELETE ID------------')
+    pprint.pprint(musician_id)
+
+    delete_data = {
+        'id' : musician_id
+    }
+
+    Band.delete_musician_w_band(delete_data)
+    # Car.delete_car(delete_data)
+
+    return redirect('/band/requests/')
 
 
 

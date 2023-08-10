@@ -1,7 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import musician_model
 
-from flask import flash
+from flask import flash, session
 import re
 
 import pprint
@@ -92,29 +92,32 @@ class Chart:
 
         charts = []
 
-        # for chart_and_band in db_response:
+        # band_id = session['band_id']
+        # print('---------SESSION BAND ID FOR CHARTS JOIN--------')
+        # pprint.pprint(session['band_id'])
 
-        #     if chart_and_band['band_id'] == session['band_id']:
+        for chart_and_band in db_response:
+            if chart_and_band['band_id'] == session['band_id']:
 
-        #         print('--------JOIN BAND ID-------')
+                # print('--------PASSED LOOP CHECK-------')
+                # print('BAND ID', session['band_id'])
+                # print('CHARTS ID', chart_and_band['charts.id'])
+                # print('CHARTS AND BAND ID', chart_and_band['band_id'])
         #         pprint.pprint(chart_and_band['band_id'])
 
-        #         print
-
-                # chart_data = {
-                #     'id' : chart_and_band['charts.id'],
-                #     'title' : chart_and_band['title'],
-                #     'chart_key' : chart_and_band['chart_key'],
-                #     'time_signature' : chart_and_band['time_signature'],
-                #     'tempo' : chart_and_band['tempo'],
-                #     'band_id' : chart_and_band['band_id']
-                # }
-
+                chart_data = {
+                    'id' : chart_and_band['charts.id'],
+                    'title' : chart_and_band['title'],
+                    'chart_key' : chart_and_band['chart_key'],
+                    'time_signature' : chart_and_band['time_signature'],
+                    'tempo' : chart_and_band['tempo'],
+                    'band_id' : chart_and_band['band_id']
+                }
 
 # #           chart dict turned into chart class instance (no class association yet)
-            # new_chart = cls(chart_data)
-            # print('----------CHART DATA INTO NEW CHART CLASS----------')
-            # pprint.pprint(new_chart)
+                new_chart = cls(chart_data)
+                print('----------CHART DATA INTO NEW CHART CLASS----------')
+                pprint.pprint(new_chart)
 
 # #           bringing in class association (user class placed in car attribute 'self.seller')
 #             new_song.performance = musician_model.Musician(song_and_musician)
@@ -123,7 +126,7 @@ class Chart:
 
 
 
-#             print('-----LOOK AT MUSICIAN SONGS ATT------')
+            # print('-----LOOK AT MUSICIAN SONGS ATT------')
 #             new_song.performance.songs.append(new_song.link)
 #             # musician_model.Musician(song_and_musician)
 #             pprint.pprint(new_song.performance.songs)
@@ -131,26 +134,55 @@ class Chart:
 
 
 # #           adding new_car class instance to cars list
-#             songs.append(new_song)
+                charts.append(new_chart)
 
-#             # guess = 
-#             # pprint.pprint(guess)
+            print('---------CHECKING LIST OF SONG INSTANCES IN GET ALL----------')
+            pprint.pprint(charts)
 
-#         print('---------CHECKING LIST OF SONG INSTANCES IN GET ALL----------')
-#         pprint.pprint(songs)
-
-        # return songs
-        return
+        return charts
 
 
+########################################################
+# SHOW CHART         chart_controller; route: /band/edit_chart/<int:chart_id>; input id_data dict; SELECT QUERY(chart_id input)
+    @classmethod
+    def show_chart(cls, show_data):
+        query = "SELECT * FROM charts WHERE id = %(id)s;"
+        db_response = connectToMySQL(db).query_db(query, show_data)
+
+        print('----------SHOW CHART DB RESPONSE----------')
+        pprint.pprint(db_response)
+
+        for chart in db_response:
+            new_chart = cls(chart)
+            # musicians.append(new_musician)
+
+        return new_chart
+        # return
 
 
+########################################################
+# UPDATE CHART        chart_controller; route: /band/update/chart; input html request.form
+    @classmethod
+    def update_chart(cls, request_form_data):
+        print('----UPDATE CHART FORM-------')
+        pprint.pprint(request_form_data)
 
 
+        query = "UPDATE charts SET title = %(title)s, chart_key = %(chart_key)s, time_signature = %(time_signature)s, tempo = %(tempo)s WHERE id = %(id)s;"
+        db_response = connectToMySQL(db).query_db(query, request_form_data)
+
+        return db_response
+        # return
 
 
+########################################################
+# DELETE CHART        band_controller; route: /band/delete_chart/<int:chart_id>, input: chart_id
+    @classmethod
+    def delete_chart(cls, chart_id):
+        query = "DELETE FROM charts WHERE id = %(id)s;"
+        db_response = connectToMySQL(db).query_db(query, chart_id)
 
-
+        return db_response
 
 
 

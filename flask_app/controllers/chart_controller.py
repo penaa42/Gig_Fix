@@ -45,16 +45,43 @@ def edit_chart_page(chart_id):
 
     chart = Chart.show_chart(id_data)
 
-    print('---------------SONG INFO PASSED TO HTML---------------')
+    print('---------------CHART INFO PASSED TO HTML---------------')
     pprint.pprint(chart)
 
 
-    return render_template('edit_song.html', chart = chart)
+    return render_template('edit_chart.html', chart = chart)
 
 
 
 
+########################################################
+# UPDATE CHART        html inputs: band_id, request.form
+@app.route('/band/update/chart', methods = ['POST'])
+def update_chart():
+    print('------UPDATING CHART------')
+    pprint.pprint(request.form)
+    # car_id = session['car_id']
 
+    # if not Car.validate_car(request.form):
+    #     print("FAILED UPDATE CAR VALIDATION")
+    #     return redirect(f'/edit_page/{car_id}')
+
+#   setting up dict for query from request.form
+    show_data = {
+        'id' : request.form['chart_id'],
+        'title' : request.form['title'],
+        'chart_key' : request.form['chart_key'],
+        'time_signature' : request.form['time_signature'],
+        'tempo' : request.form['tempo']
+    }
+
+    print('-------------UPDATE SHOW DATA-------------')
+    pprint.pprint(show_data)
+
+# #   call update method
+    Chart.update_chart(show_data)
+
+    return redirect('/band/requests/')
 
 
 

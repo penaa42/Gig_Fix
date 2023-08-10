@@ -51,7 +51,7 @@
                             <td>{{ musician.description }}</td>
                             <td>{{ musician.availability }}</td>
                             <td>{{ musician.email }}</td>
-                            <td><a href = "">Delete</a> | <a href = "">Rate</a></td>
+                            <td><a href = "/band/delete/musician/{{musician.id}}">Delete</a> | <a href = "">Rate</a></td>
                         </tr>
             {% endfor %}
                     </tbody>
@@ -72,15 +72,15 @@
                     </thead>
 
                     <tbody>
-            for
+            {% for chart in charts %}
                         <tr>
-                            <td>title</td>
-                            <td>chart_key</td>
-                            <td>time signature</td>
-                            <td>tempo</td>
-                            <td><a href = "/band/edit_chart/">Edit</a> | <a href = "">Delete</a></td>
+                            <td>{{ chart.title }}</td>
+                            <td>{{ chart.chart_key }}</td>
+                            <td>{{ chart.time_signature }}</td>
+                            <td>{{ chart.tempo }}</td>
+                            <td><a href = "/band/edit_chart/{{chart.id}}">Edit</a> | <a href = "/band/delete_chart/{{chart.id}}">Delete</a></td>
                         </tr>
-            endfor
+            {% endfor %}
                     </tbody>
                 </table>
                 <a class = "btn btn-success" href = "/band/add_chart">Add Chart</a>
