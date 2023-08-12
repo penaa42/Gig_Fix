@@ -186,4 +186,23 @@ class Chart:
 
 
 
+    @classmethod
+    def profile_view_charts(cls, show_data):
+        print('-----MUSICIAN TO CHART-----')
+        pprint.pprint(show_data)
 
+        query = "SELECT * FROM charts WHERE band_id = %(id)s"
+        print(query)
+
+        db_response = connectToMySQL(db).query_db(query, show_data)
+
+        charts = []
+
+        print('-------DB RESPONSE-------')
+        pprint.pprint(db_response)
+
+        for chart in db_response:
+            new_chart = cls(chart)
+            charts.append(new_chart)
+
+        return charts

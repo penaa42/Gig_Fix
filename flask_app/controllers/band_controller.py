@@ -189,18 +189,25 @@ def delete_chart(chart_id):
 
 
 ########################################################
-# DELETE MUSICIAN REQUEST        input: html band_requests, view , band_id musician_id
+# DELETE MUSICIAN REQUEST        input: html band_requests, band_id musician_id
 
-@app.route('/band/delete/musician/<int:musician_id>')
-def delete_musician_request(musician_id):
+@app.route('/band/delete/musician/<int:musician_id>/<int:band_id>')
+def delete_musician_request(musician_id, band_id):
 
     print('----------CHECKING JOIN DELETE ID------------')
+    print('---MUSICIAN_ID----')
     pprint.pprint(musician_id)
 
+    print('----BAND_ID----')
+    pprint.pprint(band_id)
+
     delete_data = {
-        'id' : musician_id
+        'musician_id' : musician_id,
+        'band_id' : band_id
     }
 
+    print('-------DELETE DATA W/ MUSICIAN AND BAND------')
+    pprint.pprint(delete_data)
     Band.delete_musician_w_band(delete_data)
     # Car.delete_car(delete_data)
 

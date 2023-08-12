@@ -286,3 +286,95 @@ class Musician:
         return bands
 
 
+
+########################################################
+# DELETE BAND FROM MUSICIAN REQUESTS     musician_controller; input: band_id, musician_id; route: /profile/requests/decline/<int:band_id>/<int:musician_id>
+    @classmethod
+    def delete_band_w_musician(cls, delete_data):
+
+        print('-----DELETE DATA FROM MUSICIAN DELETE BAND DICT -----')
+        pprint.pprint(delete_data)
+
+
+    #  grab id where band_id and musician_id are the same
+        # print('-----PRINTING NEW QUERY-----')
+
+        query = '''DELETE FROM bands_musicians 
+        
+        WHERE musician_id = %(musician_id)s 
+        
+        AND band_id = %(band_id)s'''
+        
+        pprint.pprint(query)
+
+        db_response = connectToMySQL(db).query_db(query, delete_data)
+        print('-----DLELET DATA DB RESPONSE-----')
+        pprint.pprint(db_response)
+
+        return
+
+
+
+########################################################
+# GET CHART WITH BAND     band_controller; input: chart_id; route: /band/requests
+    @classmethod
+    def view_band_charts(cls):
+        query = "SELECT * FROM bands JOIN charts ON bands.id = charts.band_id"
+        db_response = connectToMySQL(db).query_db(query)
+
+        print('------------CHARTS WITH BAND DB RESPONSE-----------')
+        pprint.pprint(db_response)
+
+        charts = []
+
+        # band_id = session['band_id']
+        # print('---------SESSION BAND ID FOR CHARTS JOIN--------')
+        # pprint.pprint(session['band_id'])
+
+        # for chart_and_band in db_response:
+            # if chart_and_band['band_id'] == session['band_id']:
+
+                # print('--------PASSED LOOP CHECK-------')
+                # print('BAND ID', session['band_id'])
+                # print('CHARTS ID', chart_and_band['charts.id'])
+                # print('CHARTS AND BAND ID', chart_and_band['band_id'])
+        #         pprint.pprint(chart_and_band['band_id'])
+
+#                 chart_data = {
+#                     'id' : chart_and_band['charts.id'],
+#                     'title' : chart_and_band['title'],
+#                     'chart_key' : chart_and_band['chart_key'],
+#                     'time_signature' : chart_and_band['time_signature'],
+#                     'tempo' : chart_and_band['tempo'],
+#                     'band_id' : chart_and_band['band_id']
+#                 }
+
+# # #           chart dict turned into chart class instance (no class association yet)
+#                 new_chart = cls(chart_data)
+#                 print('----------CHART DATA INTO NEW CHART CLASS----------')
+#                 pprint.pprint(new_chart)
+
+# # #           bringing in class association (user class placed in car attribute 'self.seller')
+# #             new_song.performance = musician_model.Musician(song_and_musician)
+# #             print('------------CHECKING PERFORMANCE ATTRIBUTE CLASS ASSOCIATION------------')
+# #             pprint.pprint(new_song.performance)
+
+
+
+#             # print('-----LOOK AT MUSICIAN SONGS ATT------')
+# #             new_song.performance.songs.append(new_song.link)
+# #             # musician_model.Musician(song_and_musician)
+# #             pprint.pprint(new_song.performance.songs)
+
+
+
+# # #           adding new_car class instance to cars list
+#                 charts.append(new_chart)
+
+            # print('---------CHECKING LIST OF SONG INSTANCES IN GET ALL----------')
+            # pprint.pprint(charts)
+
+        # return charts
+        return
+
+

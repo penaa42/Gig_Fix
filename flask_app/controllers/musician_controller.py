@@ -3,6 +3,7 @@ from flask import render_template, redirect, request, session, flash
 from flask_app.models.musician_model import Musician
 from flask_app.models.band_model import Band
 from flask_app.models.song_model import Song
+from flask_app.models.chart_model import Chart
 from werkzeug.utils import secure_filename
 from flask_bcrypt import Bcrypt
 
@@ -283,9 +284,67 @@ def request_page(musician_id):
 
 
 
+########################################################
+# DELETE BAND REQUEST        input: html musician_request, band_id musician_id
+
+@app.route('/profile/requests/decline/<int:musician_id>/<int:band_id>')
+def delete_band_request(musician_id, band_id):
+
+    print('----------CHECKING JOIN DELETE ID------------')
+    print('---MUSICIAN_ID----')
+    pprint.pprint(musician_id)
+
+    print('----BAND_ID----')
+    pprint.pprint(band_id)
+
+    delete_data = {
+        'musician_id' : musician_id,
+        'band_id' : band_id
+    }
+
+    print('-------DELETE DATA W/ MUSICIAN AND BAND------')
+    pprint.pprint(delete_data)
+    Musician.delete_band_w_musician(delete_data)
+
+    return redirect(f'/profile/requests/{musician_id}')
 
 
 
+@app.route('/profile/requests/view/chart/<int:musician_id>/<int:band_id>')
+def view_band_chart(musician_id, band_id):
+    print('------MUSICIAN ID FOR CHART PULL------')
+    print(musician_id)
+
+    print('------BAND ID FOR CHART PULL------')
+    print(band_id)
+
+
+    # Musician.view_band_charts()
+    # print('---TESTING MUSICIAN VIEW CHART BAND_ID----')
+
+    show_data = {
+        'id' : band_id
+    }
+
+    band_charts = Chart.profile_view_charts(show_data)
+
+    print('----RETURN FROM CHART MODEL----')
+    pprint.pprint(band_charts)
+
+    musician_id_dict = {
+        'id' : session['musician_id']
+    }
+
+    print('----BAND NAME FROM CHARTS------')
+    band_name = Band.show_band(show_data)
+    # name = band_name.name
+    pprint.pprint(band_name)
+    # band_name
+
+
+    return render_template('musician_request.html', charts = band_charts, bands = Musician.get_all_band_w_musician(musician_id_dict), band_name = band_name)
+
+    
 
 
 

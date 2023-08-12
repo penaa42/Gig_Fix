@@ -19,10 +19,10 @@
     </nav>
 
 
-    <div class = "d-flex">
+    <div class = "">
         <div class = "">
             <div class = 'container'>
-                <table class = "table ">
+                <table class = "table text-center">
                     <thead>
                         <tr>
                             <th scope="col">Band Name</th>
@@ -43,7 +43,7 @@
                     <td>{{ band.state }}</td>
                     <!-- <td>3/9/2020</td> -->
                     <!-- <td>email.com</td> -->
-                    <td><a href = "">View</a> | <a href = "">Accept</a> | <a href="">Decline</a></td>
+                    <td><a href = "/profile/requests/view/chart/{{session.musician_id}}/{{band.id}}">View Charts</a> | <a href = "">Accept</a> | <a href = "/profile/requests/decline/{{session.musician_id}}/{{band.id}}">Decline</a></td>
                 </tr>
             {% endfor %}
                     </tbody>
@@ -51,24 +51,28 @@
             </div>
 
             <div class = "container">
-                <table class = "table ">
+                <h4 class = "mt-5">Charts from  {{ band_name.name }} </h4>
+                <table class = "table text-center">
                     <thead>
                         <tr>
-                            <th scope="col">Song Chart List</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Key</th>
+                            <th scope="col">Time Signature</th>
+                            <th scope="col">Tempo</th>
                         </tr>
                     </thead>
 
                     <tbody>
-            <!-- for -->
+            {% for chart in charts %}
                         <tr>
-                            <td>title</td>
-                            <td>chart_key</td>
-                            <td>time signature</td>
-                            <td>tempo</td>
+                            <td>{{ chart.title }}</td>
+                            <td>{{ chart.chart_key }}</td>
+                            <td>{{ chart.time_signature }}</td>
+                            <td>{{ chart.tempo }}</td>
                         </tr>
-            <!-- endfor -->
+            {% endfor %}
                     </tbody>
-                    <a class = "btn btn-secondary" href = "">View Charts</a>
+                    <!-- <a class = "btn btn-secondary" href = "">View Charts</a> -->
                 </table>
 
             </div>

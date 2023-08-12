@@ -1,6 +1,6 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import musician_model
-from flask import flash
+from flask import flash, session
 import re
 
 import pprint
@@ -164,7 +164,7 @@ class Band:
 # SHOW BAND         band_controller; route: /band/requests/; input band_id_data dict; SELECT QUERY(band_id input)
     @classmethod
     def show_band(cls, show_data):
-        query = "SELECT * FROM BANDS WHERE id = %(id)s;"
+        query = "SELECT * FROM bands WHERE id = %(id)s;"
         db_response = connectToMySQL(db).query_db(query, show_data)
 
         print('----------SHOW BAND DB RESPONSE----------')
@@ -187,10 +187,24 @@ class Band:
     @classmethod
     def delete_musician_w_band(cls, delete_data):
 
-        print('-----DELETE QUERY DICT-----')
+        print('-----DELETE DATA DICT MUSICIAN_ID-----')
         pprint.pprint(delete_data)
 
+
     #  grab id where band_id and musician_id are the same
+        print('-----PRINTING NEW QUERY-----')
+
+        query = '''DELETE FROM bands_musicians 
+        
+        WHERE musician_id = %(musician_id)s 
+        
+        AND band_id = %(band_id)s'''
+        
+        pprint.pprint(query)
+
+        db_response = connectToMySQL(db).query_db(query, delete_data)
+        print('-----JOINED DICT DB RESPONSE-----')
+        pprint.pprint(db_response)
 
 
         # query = "DELETE FROM bands_musicians WHERE id = %(id)s;"
