@@ -132,13 +132,16 @@ def musician_login():
 
 @app.route('/profile')
 def profile():
+# DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
+    if not 'musician_id' in session:
+        print('FAILED MUSICIAN SESSION VALIDATION')
+        return redirect('/')
+    # if not 'band_id' in session:
+    #     print('FAILED MUSICIAN SESSION VALIDATION')
+    #     return redirect('/')
 
     musician_id = session['musician_id']
 
-# DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
-    # if not 'user_id' in session:
-    #     print('FAILED DASHBOARD SESSION VALIDATION')
-    #     return redirect('/')
 
     id_data = {
         'id' : musician_id
@@ -156,6 +159,13 @@ def profile():
 
 @app.route('/profile/edit/<int:musician_id>')
 def profile_edit(musician_id):
+    # DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
+    if not 'musician_id' in session:
+        print('FAILED MUSICIAN SESSION VALIDATION')
+        return redirect('/')
+    # if not 'band_id' in session:
+    #     print('FAILED MUSICIAN SESSION VALIDATION')
+    #     return redirect('/')
 
     musician_id = session['musician_id']
 
@@ -263,6 +273,13 @@ def delete_song(song_id):
 
 @app.route('/profile/requests/<int:musician_id>')
 def request_page(musician_id):
+    # DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
+    if not 'musician_id' in session:
+        print('FAILED MUSICIAN SESSION VALIDATION')
+        return redirect('/')
+    # if not 'band_id' in session:
+    #     print('FAILED MUSICIAN SESSION VALIDATION')
+    #     return redirect('/')
 # call a join request for musician and band
     print('----CHECKING FOR MUSICIAN ID IN GIG REQUESTS----')
     pprint.pprint(musician_id)
@@ -312,6 +329,13 @@ def delete_band_request(musician_id, band_id):
 
 @app.route('/profile/requests/view/chart/<int:musician_id>/<int:band_id>')
 def view_band_chart(musician_id, band_id):
+    # DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
+    if not 'musician_id' in session:
+        print('FAILED MUSICIAN SESSION VALIDATION')
+        return redirect('/')
+    # if not 'band_id' in session:
+    #     print('FAILED MUSICIAN SESSION VALIDATION')
+    #     return redirect('/')
     print('------MUSICIAN ID FOR CHART PULL------')
     print(musician_id)
 

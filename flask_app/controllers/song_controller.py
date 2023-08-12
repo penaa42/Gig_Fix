@@ -8,6 +8,14 @@ import pprint
 
 @app.route('/profile/add_song')
 def add_song_page():
+# DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
+    if not 'musician_id' in session:
+        print('FAILED MUSICIAN SESSION VALIDATION')
+        return redirect('/')
+    # if not 'band_id' in session:
+    #     print('FAILED MUSICIAN SESSION VALIDATION')
+    #     return redirect('/')
+
     return render_template('add_song.html')
 
 
@@ -34,6 +42,14 @@ def create_song():
 
 @app.route('/profile/edit_song/<int:song_id>')
 def edit_song_page(song_id):
+    # DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
+    if not 'musician_id' in session:
+        print('FAILED MUSICIAN SESSION VALIDATION')
+        return redirect('/')
+    # if not 'band_id' in session:
+    #     print('FAILED MUSICIAN SESSION VALIDATION')
+    #     return redirect('/')
+    
     # musician_id = session['musician_id']
 
     id_data = {

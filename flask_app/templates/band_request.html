@@ -20,7 +20,7 @@
     </nav>
 
 
-    <div class = "d-flex">
+    <div class = "">
         <div class = "">
             <div class = 'container'>
                 <table class = "table text-center">
@@ -40,20 +40,20 @@
                     </thead>
 
                     <tbody>
-            {% for musician in musicians %}
-                        <tr>
-                            <td>{{ musician.first_name }} {{ musician.last_name }}</td>
-                            <td>{{ musician.genre }}</td>
-                            <td>{{ musician.instrument }}</td>
-                            <td>{{ musician.city }}</td>
-                            <td>{{ musician.state }}</td>
-                            <td>{{ musician.experience }}</td>
-                            <td>{{ musician.description }}</td>
-                            <td>{{ musician.availability }}</td>
-                            <td>{{ musician.email }}</td>
-                            <td><a href = "/band/delete/musician/{{musician.id}}/{{session.band_id}}">Delete</a> | <a href = "">Rate</a></td>
-                        </tr>
-            {% endfor %}
+                        {% for musician in musicians %}
+                            <tr>
+                                <td>{{ musician.first_name }} {{ musician.last_name }}</td>
+                                <td>{{ musician.genre }}</td>
+                                <td>{{ musician.instrument }}</td>
+                                <td>{{ musician.city }}</td>
+                                <td>{{ musician.state }}</td>
+                                <td>{{ musician.experience }}</td>
+                                <td>{{ musician.description }}</td>
+                                <td>{{ musician.availability }}</td>
+                                <td>{{ musician.email }}</td>
+                                <td><a href = "/band/delete/musician/{{musician.id}}/{{session.band_id}}">Delete</a> | <a href = "">Rate</a> | <a href = "/profile">Profile</a></td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -72,18 +72,18 @@
                     </thead>
 
                     <tbody>
-            {% for chart in charts %}
-                        <tr>
-                            <td>{{ chart.title }}</td>
-                            <td>{{ chart.chart_key }}</td>
-                            <td>{{ chart.time_signature }}</td>
-                            <td>{{ chart.tempo }} bpm</td>
-                            <td><a href = "/band/edit_chart/{{chart.id}}">Edit</a> | <a href = "/band/delete_chart/{{chart.id}}">Delete</a></td>
-                        </tr>
-            {% endfor %}
+                        {% for chart in charts %}
+                            <tr>
+                                <td>{{ chart.title }}</td>
+                                <td>{{ chart.chart_key }}</td>
+                                <td>{{ chart.time_signature }}</td>
+                                <td>{{ chart.tempo }} bpm</td>
+                                <td><a href = "/band/edit_chart/{{chart.id}}">Edit</a> | <a href = "/band/delete_chart/{{chart.id}}">Delete</a></td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
-                <a class = "btn btn-success" href = "/band/add_chart">Add Chart</a>
+                <a class = "btn btn-success mb-5" href = "/band/add_chart">Add Chart</a>
 
             </div>
         </div>

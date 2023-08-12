@@ -81,6 +81,13 @@ def band_login():
 # DASHBOARD: DISPLAY ALL MUSICIANS
 @app.route('/dashboard')
 def dashboard():
+    # DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
+    # if not 'musician_id' in session:
+    #     print('FAILED MUSICIAN SESSION VALIDATION')
+    #     return redirect('/')
+    if not 'band_id' in session:
+        print('FAILED MUSICIAN SESSION VALIDATION')
+        return redirect('/')
     # if not 'band_id' in session:
     #     print('FAILED DASHBOARD SESSION VALIDATION')
     #     return redirect('/band')
@@ -90,6 +97,13 @@ def dashboard():
 
 @app.route('/profile/<int:musician_id>')
 def view_profile(musician_id):
+    # DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
+    # if not 'musician_id' in session:
+    #     print('FAILED MUSICIAN SESSION VALIDATION')
+    #     return redirect('/')
+    if not 'band_id' in session:
+        print('FAILED MUSICIAN SESSION VALIDATION')
+        return redirect('/')
 
     # musician_id = session['musician_id']
 
@@ -117,6 +131,14 @@ def view_profile(musician_id):
 
 @app.route('/band/requests/')
 def band_requests():
+# DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
+    # if not 'musician_id' in session:
+    #     print('FAILED MUSICIAN SESSION VALIDATION')
+    #     return redirect('/')
+    if not 'band_id' in session:
+        print('FAILED MUSICIAN SESSION VALIDATION')
+        return redirect('/')
+
     print('-----SESSION BAND ID FOR JOIN------')
     pprint.pprint(session['band_id'])
 

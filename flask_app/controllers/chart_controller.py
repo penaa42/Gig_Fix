@@ -9,6 +9,14 @@ import pprint
 
 @app.route('/band/add_chart')
 def add_chart_page():
+    # DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
+    # if not 'musician_id' in session:
+    #     print('FAILED MUSICIAN SESSION VALIDATION')
+    #     return redirect('/')
+    if not 'band_id' in session:
+        print('FAILED MUSICIAN SESSION VALIDATION')
+        return redirect('/')
+    
     return render_template('add_chart.html')
 
 
@@ -37,6 +45,13 @@ def create_chart():
 
 @app.route('/band/edit_chart/<int:chart_id>')
 def edit_chart_page(chart_id):
+    # DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
+    # if not 'musician_id' in session:
+    #     print('FAILED MUSICIAN SESSION VALIDATION')
+    #     return redirect('/')
+    if not 'band_id' in session:
+        print('FAILED MUSICIAN SESSION VALIDATION')
+        return redirect('/')
     # band_id = session['band_id']
 
     id_data = {
