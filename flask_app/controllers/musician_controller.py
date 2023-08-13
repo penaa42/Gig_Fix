@@ -13,6 +13,8 @@ import pprint
 
 bcrypt = Bcrypt(app)
 
+
+
 ###################################################################################
 # 1) home html
 @app.route('/')
@@ -369,6 +371,83 @@ def view_band_chart(musician_id, band_id):
     return render_template('musician_request.html', charts = band_charts, bands = Musician.get_all_band_w_musician(musician_id_dict), band_name = band_name)
 
     
+
+@app.route('/profile/upload/image_page')
+def upload_image_page():
+    print('---MADE IT TO UPLOAD PAGE-----')
+
+
+    return render_template('upload_image.html')
+
+
+@app.route('/profile/add/image', methods = ['POST'])
+def add_image():
+
+    print('-----MADE IT TO UPLOAD ROUTE------')
+
+
+#   following section move to musician model? is model needed? yes, saving string to db. Pass class attributes as hidden input?
+    # image
+    profile_pic = request.files['profile_pic']
+    print(profile_pic)
+
+    #image name/secure filename
+    pic_filename = secure_filename(profile_pic.filename)
+    print(pic_filename)
+
+
+
+    #multiple same file names
+    #set uuid
+    pic_name = str(uuid.uuid1()) + "_" + pic_filename
+    print('-----PROFILE PIC NAME------')
+    print(pic_name)
+
+    dir_name = os.path.dirname(__file__)
+    print('-----DIR_NAME----')
+    print(dir_name)
+
+    correct_dir = 
+    test_path = os.path.join(dir_name, app.config['UPLOAD_FOLDER'], pic_name)
+
+
+    # test_path = os.path.join(app.config['UPLOAD_FOLDER'], pic_name)
+    print('----TEST PATH FOR PIC------')
+    # print(test_path)
+
+    # save image
+    # profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+
+    #set pic_name string to file
+    profile_pic = pic_name
+    
+
+#   dict for musician_model UPDATE query
+    pic_dict = {
+        'id' : session['musician_id'],
+        # 'first_name' : request.form['first_name'],
+        # 'last_name' : request.form['last_name'],
+        # 'email' : request.form['email'],
+        # 'password' : request.form['password'],
+        # 'created_at' : request.form['created_at'],
+        # 'updated_at' : request.form['updated_at'],
+        # 'genre' : request.form['genre'],
+        # 'city' : request.form['city'],
+        # 'state' : request.form['state'],
+        # 'experience' : request.form['experience'],
+        # 'description' : request.form['description'],
+        # 'instrument' : request.form['instrument'],
+        # 'availability' : request.form['availability'],
+        'profile_pic' : profile_pic
+    }
+
+    print('------PIC DICT------')
+    pprint.pprint(pic_dict)
+
+    # Musician.add_image(pic_dict)
+
+    return redirect('/profile')
+
 
 
 

@@ -1,8 +1,13 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import band_model
 from flask import flash
-import re
 
+from werkzeug.utils import secure_filename
+from flask_bcrypt import Bcrypt
+
+import uuid as uuid
+import os
+import re
 import pprint
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$') 
@@ -26,7 +31,8 @@ class Musician:
         self.instrument = data['instrument']
         self.availability = data['availability']
         #possible delete
-        # self.profile_pic = str(data['profile_pic'])
+        #db is saving image as a string
+        self.profile_pic = data['profile_pic']
         self.songs = []
 
 
@@ -316,65 +322,41 @@ class Musician:
 
 
 ########################################################
-# GET CHART WITH BAND     band_controller; input: chart_id; route: /band/requests
+# PROFILE PIC     musician_controller; input: request.form; route: /profile/upload
     @classmethod
-    def view_band_charts(cls):
-        query = "SELECT * FROM bands JOIN charts ON bands.id = charts.band_id"
-        db_response = connectToMySQL(db).query_db(query)
+    def add_image(cls, pic_dict):
+        # profile_pic = request.files['profile_pic']
 
-        print('------------CHARTS WITH BAND DB RESPONSE-----------')
+        # #image name/secure filename
+        # pic_filename = secure_filename(profile_pic.filename)
+
+        # #multiple same file names
+        # #set uuid
+        # pic_name = str(uuid.uuid1()) + "_" + pic_filename
+
+        # #set pic_name string to file
+        # profile_pic = pic_name
+
+        # print('-----PROFILE PIC NAME------')
+        # print(profile_pic)
+        
+        print('------PIC CLASSMETHOD REQUEST FORM------')
+        pprint.pprint(pic_dict)
+
+        query = '''UPDATE musicians SET 
+        
+        profile_pic = %(profile_pic)s 
+        
+        WHERE id = %(id)s'''
+        
+        print('-----PIC QUERY------')
+        pprint.pprint(query)
+
+        db_response = connectToMySQL(db).query_db(query, pic_dict)
+        print('------PIC DB RESPONSE-----')
         pprint.pprint(db_response)
 
-        charts = []
 
-        # band_id = session['band_id']
-        # print('---------SESSION BAND ID FOR CHARTS JOIN--------')
-        # pprint.pprint(session['band_id'])
-
-        # for chart_and_band in db_response:
-            # if chart_and_band['band_id'] == session['band_id']:
-
-                # print('--------PASSED LOOP CHECK-------')
-                # print('BAND ID', session['band_id'])
-                # print('CHARTS ID', chart_and_band['charts.id'])
-                # print('CHARTS AND BAND ID', chart_and_band['band_id'])
-        #         pprint.pprint(chart_and_band['band_id'])
-
-#                 chart_data = {
-#                     'id' : chart_and_band['charts.id'],
-#                     'title' : chart_and_band['title'],
-#                     'chart_key' : chart_and_band['chart_key'],
-#                     'time_signature' : chart_and_band['time_signature'],
-#                     'tempo' : chart_and_band['tempo'],
-#                     'band_id' : chart_and_band['band_id']
-#                 }
-
-# # #           chart dict turned into chart class instance (no class association yet)
-#                 new_chart = cls(chart_data)
-#                 print('----------CHART DATA INTO NEW CHART CLASS----------')
-#                 pprint.pprint(new_chart)
-
-# # #           bringing in class association (user class placed in car attribute 'self.seller')
-# #             new_song.performance = musician_model.Musician(song_and_musician)
-# #             print('------------CHECKING PERFORMANCE ATTRIBUTE CLASS ASSOCIATION------------')
-# #             pprint.pprint(new_song.performance)
-
-
-
-#             # print('-----LOOK AT MUSICIAN SONGS ATT------')
-# #             new_song.performance.songs.append(new_song.link)
-# #             # musician_model.Musician(song_and_musician)
-# #             pprint.pprint(new_song.performance.songs)
-
-
-
-# # #           adding new_car class instance to cars list
-#                 charts.append(new_chart)
-
-            # print('---------CHECKING LIST OF SONG INSTANCES IN GET ALL----------')
-            # pprint.pprint(charts)
-
-        # return charts
         return
 
 

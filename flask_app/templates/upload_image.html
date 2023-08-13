@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Image Upload</title>
+</head>
+<body style = "background-color: rgba(0, 0, 0, 0.8);">
+    <div class = "container mask m-5 mx-auto w-50">
+        <form action = "/profile/add/image" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(204, 190, 139);" method = "post", enctype = "multipart/form-data">
+            <input type = "hidden" name = "musician_id" value = "{{ session.musician_id }}">
+            <!-- <input type = "hidden" name = "password" value = " session.musician.password "> -->
+            <div class = "/profile/add/image">
+                <h1 class = "text-center">Add Profile Picture</h1>
+                <div class = "text-light bg-danger rounded-4 m-4">
+                    <!-- <div class = ""> -->
+                        {% with messages = get_flashed_messages() %}
+                        <!-- declare a variable called messages -->
+                            {% if messages %}
+                            <!-- check if there are any messages -->
+                                {% for message in messages %}
+                                <!-- loop through the messages -->
+                                    <p>{{message}}</p>
+                                    <!-- display each message in a paragraph tag -->
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
+                    <!-- </div> -->
+                </div>
+
+                <div class = "m-4">
+                    <label for = "profile_pic" class = "form-label">Profile Picture:</label>
+                    <input type = "file" class = "form-control" name = "profile_pic">
+                    <br/>
+
+                    <!-- <label for = "city" class = "form-label">City:</label>
+                    <input type = "text" class = "form-control" name = "city" placeholder = "What city was the Performance?">
+                    <br/>
+
+                    <label for = "state" class = "form-label">State:</label>
+                    <input type = "text" class = "form-control" name = "state" placeholder = "What state was the Performance?">
+                    <br/>
+
+                    <label for = "link" class = "form-label">Link:</label>
+                    <input type = "text" class = "form-control  mb-2 " name = "link" placeholder = "Please provide an embed link to the Performance"> -->
+                </div>
+                <button type = "submit" class = "mx-4 mb-2 btn btn-primary" >Add Picture</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

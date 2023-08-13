@@ -51,7 +51,7 @@
                                 <td>{{ musician.description }}</td>
                                 <td>{{ musician.availability }}</td>
                                 <td>{{ musician.email }}</td>
-                                <td><a href = "/band/delete/musician/{{musician.id}}/{{session.band_id}}">Delete</a> | <a href = "">Rate</a> | <a href = "/profile">Profile</a></td>
+                                <td><a href = "/band/delete/musician/{{musician.id}}/{{session.band_id}}">Delete</a> | <a href = "">Rate</a> | <a href = "/profile/{{musician.id}}">View Performances</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>

@@ -3,5 +3,5 @@ app = Flask(__name__)
 app.secret_key = 'Save the Gig, save the world!'
 
 
-upload_folder = '/flask_app/static/assests/img/profile/'
-app.config['upload_folder'] = upload_folder
+UPLOAD_FOLDER = "/static/assests/img/profile"
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
