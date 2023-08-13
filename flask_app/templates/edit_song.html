@@ -6,16 +6,29 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">    
     <title>Edit Song</title>
 </head>
-<body style = "background-color: rgba(0, 0, 0, 0.8);">
-    <!-- <p> song id: song.id</p> -->
+<body style = "background-color: rgb(204, 190, 139)">
+    <nav class = "navbar navbar-expand-lg d-lg-block" style = "background-color: rgb(35,100,138)">
+        <div class = "container mt-3 mb-3">
+            <h1 class = " text-white">Edit Performance</h1>
+            <div class = "navbar-inline">
+                <ul class = "navbar-nav ">
+                    <li class = "nav-item active mx-3">
+                        <a class = "btn text-white border" style = "background-color: rgb(204, 190, 139);" href = "/profile">Back</a>
+                    </li>
+                    <li class = "nav-item">
+                        <a class = "btn border text-light" style = "background-color: rgb(163,0,0);" href = "/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class = "container mask m-5 mx-auto w-50">
-        <form action = "/profile/update/song" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(204, 190, 139);" method = "post">
+        <form action = "/profile/update/song" class = "rounded-4 shadow-5-strong text-light border border-3" style = "background-color: rgb(35,100,138)" method = "post">
             <input type = "hidden" name = "musician_id" value = "{{ session.musician_id }}">
             <input type = "hidden" name = "song_id" value = "{{ song.id }}">
-            <!-- <input type = "hidden" name = "password" value = " session.musician.password "> -->
-            <div class = "">
-                <h1 class = "text-center">Edit Performance</h1>
-                <div class = "text-light bg-danger rounded-4 m-4">
+            <div class = "p-2">
+                <div class = "text-light text-center bg-danger rounded-4 m-4">
                     <!-- <div class = ""> -->
                         {% with messages = get_flashed_messages() %}
                         <!-- declare a variable called messages -->
@@ -23,7 +36,7 @@
                             <!-- check if there are any messages -->
                                 {% for message in messages %}
                                 <!-- loop through the messages -->
-                                    <p>{{message}}</p>
+                                    <p class = "p-2">{{message}}</p>
                                     <!-- display each message in a paragraph tag -->
                                 {% endfor %}
                             {% endif %}
@@ -31,22 +44,23 @@
                     <!-- </div> -->
                 </div>
 
-                <!-- <p>musician id: {{ session.musician_id }}</p> -->
-                <p>song id: {{ song.id }} </p>
                 <div class = "m-4">
                     <label for = "date" class = "form-label">Date Performed:</label>
-                    <input type = "date" class = "form-control  mb-2 " name = "date" value = "{{ song.date }}">
+                    <input type = "date" class = "form-control" name = "date" value = "{{ song.date }}">
+                    <br/>
 
                     <label for = "city" class = "form-label">City:</label>
-                    <input type = "text" class = "form-control  mb-2 " name = "city" value = "{{ song.city }}">
+                    <input type = "text" class = "form-control" name = "city" value = "{{ song.city }}">
+                    <br/>
 
                     <label for = "state" class = "form-label">State:</label>
-                    <input type = "text" class = "form-control  mb-2 " name = "state" value = "{{ song.state }}">
+                    <input type = "text" class = "form-control" name = "state" value = "{{ song.state }}">
+                    <br/>
 
                     <label for = "link" class = "form-label">Link:</label>
                     <input type = "text" class = "form-control  mb-2 " name = "link" value = "{{ song.link }}">
                 </div>
-                <button type = "submit" class = "mx-4 mb-2 btn btn-primary">Update</button>
+                <button type = "submit" class = "mx-4 mb-3 btn btn-success border">Update</button>
             </div>
         </form>
     </div>

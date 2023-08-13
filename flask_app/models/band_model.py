@@ -74,7 +74,6 @@ class Band:
         return cls(db_response[0])
 
 
-
 ########################################################
 # CREATE BAND         band_controller; route: /band/register; INSERT QUERY(request.form input)
     @classmethod
@@ -84,8 +83,8 @@ class Band:
 
         print('-----------CREATE BAND DB RESPONSE-----------')
         pprint.pprint(db_response)
+
         return db_response
-    
 
 # CREATE GIG REQUEST        band_controller; route /band/gig/request; INSERT QUERY(request.form input)
     @classmethod
@@ -103,7 +102,6 @@ class Band:
         return
 
 
-
 ########################################################
 # GET BANDS WITH MUSICIANS     band_controller; input: band_id; route: /band/requests/<int:band_id>?
     @classmethod
@@ -112,14 +110,8 @@ class Band:
         print('-----JOIN QUERY DICT-----')
         pprint.pprint(band_id_dict)
 
-        # query = "SELECT * FROM bands JOIN bands_musicians ON bands.id = bands_musicians.band_id JOIN musicians ON musicians.id = bands_musicians.musician_id;"
-
         query = "SELECT * FROM musicians JOIN bands_musicians ON musicians.id = bands_musicians.musician_id JOIN bands ON bands.id = bands_musicians.band_id"
         print(query)
-
-
-
-
 
         db_response = connectToMySQL(db).query_db(query)
 
@@ -144,7 +136,8 @@ class Band:
                     'experience' : musician_and_band['experience'],
                     'description' : musician_and_band['description'],
                     'instrument' : musician_and_band['instrument'],
-                    'availability' : musician_and_band['availability']
+                    'availability' : musician_and_band['availability'],
+                    'profile_pic' : musician_and_band['profile_pic']
                 }
 
                 new_musician = musician_model.Musician(musician_data)
@@ -157,7 +150,6 @@ class Band:
         pprint.pprint(musicians)
 
         return musicians
-        # return
 
 
 ########################################################
@@ -176,45 +168,31 @@ class Band:
 
         for band in db_response:
             new_band = cls(band)
-            # musicians.append(new_musician)
 
         return new_band
-
 
 
 ########################################################
 # DELETE MUSICIANS FROM BAND REQUESTS     band_controller; input: band_id; route: /band/requests/<int:band_id>?
     @classmethod
     def delete_musician_w_band(cls, delete_data):
-
         print('-----DELETE DATA DICT MUSICIAN_ID-----')
         pprint.pprint(delete_data)
-
 
     #  grab id where band_id and musician_id are the same
         print('-----PRINTING NEW QUERY-----')
 
         query = '''DELETE FROM bands_musicians 
-        
+
         WHERE musician_id = %(musician_id)s 
-        
+
         AND band_id = %(band_id)s'''
-        
+
         pprint.pprint(query)
 
         db_response = connectToMySQL(db).query_db(query, delete_data)
         print('-----JOINED DICT DB RESPONSE-----')
         pprint.pprint(db_response)
-
-
-        # query = "DELETE FROM bands_musicians WHERE id = %(id)s;"
-        # print(query)
-
-        # db_response = connectToMySQL(db).query_db(query)
-
-        # print('----DELETE MUSICIAN REQUEST DB RESPONSE-----')
-        # pprint.pprint(db_response)
-
 
         return
 

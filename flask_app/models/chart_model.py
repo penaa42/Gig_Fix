@@ -27,19 +27,13 @@ class Chart:
     @staticmethod
     def validate_chart(form_data):
 
-        # print()
-
         is_valid = True
-
-        # if form_data['price'] == 0 or form_data['price'] == "":
-        #     flash('Car Price is required and cannot be 0, please enter Car Price.')
-        #     is_valid = False
 
         if form_data['title'] == "":
             flash('Title is required, please enter Chart Title.')
             is_valid = False
 
-        if form_data['chart_key'] == "":
+        if form_data['chart_key'] == "" or len(form_data['chart_key']) < 1:
             flash('Key is required, please enter Chart Key.')
             is_valid = False
 
@@ -47,37 +41,24 @@ class Chart:
             flash('Time signature is required, please enter the Chart Time Signature.')
             is_valid = False
 
-        # if len(form_data['state']) != 2:
-        #     flash('State is required, please enter State abbreviation.')
-        #     is_valid = False
-
-        if form_data['tempo'] == "":
-            flash('Tempo is blank, please enter a Tempo.')
+        if form_data['tempo'] == "" or form_data['tempo'] == 0:
+            flash('Invalid tempo, please re-enter a Tempo.')
             is_valid = False
 
-        # if int(form_data['tempo']) < 1:
-        #     flash('Tempo must be greater than 0, please enter Tempo.')
-        #     is_valid = False
-
         return is_valid
-    
 
 ########################################################
 # CREATE CHART        chart_controller; route: /band/create_chart; input request.form; INSERT QUERY(input band_id)
     @classmethod
     def create_chart(cls, request_form_data):
-        # pprint.pprint(request_form_data)
 
         query = "INSERT INTO charts (title, chart_key, time_signature, tempo, band_id) VALUES (%(title)s, %(chart_key)s, %(time_signature)s, %(tempo)s, %(band_id)s);"
         db_response = connectToMySQL(db).query_db(query, request_form_data)
-
-        # INSERT INTO table_name (column_name1, column_name2) VALUES('column1_value', 'column2_value');
 
         print('-------------CREATE CHART DB RESPONSE-------------')
         pprint.pprint(db_response)
 
         return db_response
-
 
 
 ########################################################
@@ -92,18 +73,8 @@ class Chart:
 
         charts = []
 
-        # band_id = session['band_id']
-        # print('---------SESSION BAND ID FOR CHARTS JOIN--------')
-        # pprint.pprint(session['band_id'])
-
         for chart_and_band in db_response:
             if chart_and_band['band_id'] == session['band_id']:
-
-                # print('--------PASSED LOOP CHECK-------')
-                # print('BAND ID', session['band_id'])
-                # print('CHARTS ID', chart_and_band['charts.id'])
-                # print('CHARTS AND BAND ID', chart_and_band['band_id'])
-        #         pprint.pprint(chart_and_band['band_id'])
 
                 chart_data = {
                     'id' : chart_and_band['charts.id'],
@@ -114,26 +85,10 @@ class Chart:
                     'band_id' : chart_and_band['band_id']
                 }
 
-# #           chart dict turned into chart class instance (no class association yet)
                 new_chart = cls(chart_data)
                 print('----------CHART DATA INTO NEW CHART CLASS----------')
                 pprint.pprint(new_chart)
 
-# #           bringing in class association (user class placed in car attribute 'self.seller')
-#             new_song.performance = musician_model.Musician(song_and_musician)
-#             print('------------CHECKING PERFORMANCE ATTRIBUTE CLASS ASSOCIATION------------')
-#             pprint.pprint(new_song.performance)
-
-
-
-            # print('-----LOOK AT MUSICIAN SONGS ATT------')
-#             new_song.performance.songs.append(new_song.link)
-#             # musician_model.Musician(song_and_musician)
-#             pprint.pprint(new_song.performance.songs)
-
-
-
-# #           adding new_car class instance to cars list
                 charts.append(new_chart)
 
             print('---------CHECKING LIST OF SONG INSTANCES IN GET ALL----------')
@@ -154,10 +109,8 @@ class Chart:
 
         for chart in db_response:
             new_chart = cls(chart)
-            # musicians.append(new_musician)
 
         return new_chart
-        # return
 
 
 ########################################################
@@ -167,12 +120,10 @@ class Chart:
         print('----UPDATE CHART FORM-------')
         pprint.pprint(request_form_data)
 
-
         query = "UPDATE charts SET title = %(title)s, chart_key = %(chart_key)s, time_signature = %(time_signature)s, tempo = %(tempo)s WHERE id = %(id)s;"
         db_response = connectToMySQL(db).query_db(query, request_form_data)
 
         return db_response
-        # return
 
 
 ########################################################
@@ -183,7 +134,6 @@ class Chart:
         db_response = connectToMySQL(db).query_db(query, chart_id)
 
         return db_response
-
 
 
     @classmethod

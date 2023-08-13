@@ -12,15 +12,26 @@
     <title>Musician Login</title>
 </head>
 <body>
+    <nav class = "navbar navbar-expand-lg d-lg-block" style = "background-color: black">
+        <div class = "container">
+            <h1 class = " text-white">Gig Fix</h1>
+            <div class = "navbar-inline">
+                <ul class = "navbar-nav ">
+                    <li class = "nav-item active mx-5">
+                        <a class = "nav-link text-white" href = "/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div id = "intro">
         <div class = "d-flex justified-content-evenly" style = "background-color: rgba(0, 0, 0, 0.8);">
-
             <div class = "container mask m-5">
-                <form action = "/musician/register" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(204, 190, 139);" method = "post">
-                    <div >
-                        <h2 class = "text-center">Register</h2>
-                        <div class = "text-light bg-danger rounded-4 m-4">
+                <form action = "/musician/register" class = "rounded-4 text-light" style = "background-color: rgb(204, 190, 139);" method = "post">
+                    <div class = "p-2">
+                        <h2 class = "text-center text-light">Register</h2>
+                        <div class = "text-light text-center bg-danger rounded-4 m-4">
                             <!-- <div class = ""> -->
                                 {% with messages = get_flashed_messages(category_filter = ["category1"]) %}
                                 <!-- declare a variable called messages -->
@@ -28,7 +39,7 @@
                                     <!-- check if there are any messages -->
                                         {% for message in messages %}
                                         <!-- loop through the messages -->
-                                            <p>{{message}}</p>
+                                            <p class = "p-2">{{message}}</p>
                                             <!-- display each message in a paragraph tag -->
                                         {% endfor %}
                                     {% endif %}
@@ -58,7 +69,7 @@
                             <br/>
 
                             <label for = "experience" class = "form-label">Experience:</label>
-                            <input type = "number" class = "form-control" name = "experience" placeholder = "Enter Years of Experience">
+                            <input type = "number" class = "form-control" name = "experience" min = "0" placeholder = "Enter Years of Experience">
                             <br/>
 
                             <label for = "instrument" class = "form-label">Instrument:</label>
@@ -68,10 +79,6 @@
                             <label for = "availability" class = "form-label">Availability:</label>
                             <input type = "text" class = "form-control" name = "availability" placeholder = "Enter the Days You're Available">
                             <br/>
-
-                            <!-- <label for = "formFile" class = "form-label">Profile Picture:</label>
-                            <input type = "file" class = "form-control" name = "profile_pic" id = "formFile">
-                            <br/> -->
 
                             <label for = "email" class = "form-label">Email:</label>
                             <input type = "email" class = "form-control" name = "email" placeholder = "Enter Email">
@@ -94,10 +101,10 @@
             </div>
 
             <div class = "container m-5">
-                <form action = "/musician/login" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(204, 190, 139);" method = "post">
+                <form action = "/musician/login" class = "rounded-4 text-light" style = "background-color: rgb(204, 190, 139);" method = "post">
                     <div>
-                        <h2 class = "text-center">Login</h2>
-                        <div class = "text-light bg-danger rounded-4 m-4">
+                        <h2 class = "text-center text-light p-2">Login</h2>
+                        <div class = "text-light text-center bg-danger rounded m-4">
                             <!-- <div class = ""> -->
                                 {% with messages = get_flashed_messages(category_filter = ["category2"]) %}
                                 <!-- declare a variable called messages -->
@@ -105,12 +112,12 @@
                                 <!-- check if there are any messages -->
                                         {% for message in messages %}
                                 <!-- loop through the messages -->
-                                        <p>{{message}}</p>
+                                        <p class = "p-2">{{message}}</p>
                                 <!-- display each message in a paragraph tag -->
                                         {% endfor %}
                                     {% endif %}
                                 {% endwith %}
-                                <!-- </div> -->                    
+                                <!-- </div> -->
                         </div>
 
                         <div class = "m-4">

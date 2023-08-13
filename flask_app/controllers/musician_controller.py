@@ -14,7 +14,6 @@ import pprint
 bcrypt = Bcrypt(app)
 
 
-
 ###################################################################################
 # 1) home html
 @app.route('/')
@@ -31,28 +30,12 @@ def musician_index():
 def musician_register():
 
     print('-------CREATE MUSICIAN FORM DATA--------')
-    # pprint.pprint(request.form)
-    # print('------TRYING TO SEE THE FORM DATA FOR PIC-------')
-    # print(request.files['profile_pic'])
 
     if not Musician.validate_musician(request.form):
         print('FAILED MUSICIAN VALIDATE')
         return redirect('/musician')
+
 #   saving the hashed password
-
-    # if request.method == "POST":
-    # the image itself
-    # profile_pic = request.files['profile_pic']
-    # # image name
-    # pic_filename = secure_filename(profile_pic.filename)
-    # # unique id
-    # pic_name = str(uuid.uuid1()) + "_" + pic_filename
-    # # save img
-    # profile_pic.save(os.path.join(app.config['upload_folder'], pic_name))
-    # #change to string to save to db
-    # profile_pic = pic_name
-
-
 
     print('------PICTURE NAME------')
     # pprint.pprint(profile_pic)
@@ -72,9 +55,6 @@ def musician_register():
         "instrument" : request.form['instrument'],
         "availability" : request.form['availability'],
         "email" : request.form['email'],
-        # "profile_pic" : profile_pic,
-        # grab img name
-        # pic_filename : ,
         "password" : pw_hash
     }
 
@@ -105,45 +85,29 @@ def musician_login():
     if len(request.form['password']) < 8:
         flash('Invalid email/password!', 'category2')
         return redirect('/musician')
-    
+
     # checking if the passwords match
     if not bcrypt.check_password_hash(musician_in_db.password, request.form['password']):
         # if we get False after checking the password
         flash('Invalid Email/Password!', 'category2')
         return redirect('/musician')
-    
+
     # if the passwords matched, we set the user_id into session
     session['musician_id'] = musician_in_db.id
     # allowing access to first name for login display
     session['first_name'] = musician_in_db.first_name
     session['last_name'] = musician_in_db.last_name
 
-    # print('---------MUSICIAN ID-----------')
-    # print(session['musician_id'])
-
-    # print('---------MUSICIAN FIRST NAME-----------')
-    # print(session['first_name'])
-    
-    # print('---------MUSICIAN LAST NAME-----------')
-    # print(session['last_name'])
-    # pprint(musician_in_db)
-
-
     return redirect('/profile')
 
 
 @app.route('/profile')
 def profile():
-# DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
     if not 'musician_id' in session:
         print('FAILED MUSICIAN SESSION VALIDATION')
         return redirect('/')
-    # if not 'band_id' in session:
-    #     print('FAILED MUSICIAN SESSION VALIDATION')
-    #     return redirect('/')
 
     musician_id = session['musician_id']
-
 
     id_data = {
         'id' : musician_id
@@ -154,20 +118,14 @@ def profile():
     print('---------------MUSICIAN INFO PASSED TO HTML---------------')
     pprint.pprint(musician)
 
-    # songs = Song.get_songs_w_musician()
-
     return render_template('profile.html', musician = musician, songs = Song.get_songs_w_musician())
-###########################################################################################################
 
+###########################################################################################################
 @app.route('/profile/edit/<int:musician_id>')
 def profile_edit(musician_id):
-    # DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
     if not 'musician_id' in session:
         print('FAILED MUSICIAN SESSION VALIDATION')
         return redirect('/')
-    # if not 'band_id' in session:
-    #     print('FAILED MUSICIAN SESSION VALIDATION')
-    #     return redirect('/')
 
     musician_id = session['musician_id']
 
@@ -183,12 +141,10 @@ def profile_edit(musician_id):
     return render_template('profile_edit.html', musician = musician)
 
 
-
 @app.route('/profile/update', methods = ['POST'])
 def update_profile():
 
     musician_id = session['musician_id']
-    
 
     print('-------CHECK BEFORE USER UPDATE VALIDATE------------')
 
@@ -207,11 +163,6 @@ def update_profile():
     print('--------PASSWORD PULLED FROM SHOW MUSICIAN-----------')
     pprint.pprint(musician.password)
 
-    # update_info = {
-    #     'password' : musician['password']
-    # }
-
-
 #   setting up dict for query from request.form
     update_data = {
         'id' : session['musician_id'],
@@ -224,8 +175,6 @@ def update_profile():
         'instrument' : request.form['instrument'],
         'availability' : request.form['availability'],
         'description' : request.form['description'],
-        # 'password' : musician.password
-
     }
 
     print('-------------UPDATE SHOW DATA-------------')
@@ -236,26 +185,8 @@ def update_profile():
 
     return redirect('/profile')
 
-
-
-# @app.route('/profile/add_song')
-# def add_song():
-#     print('------ADD SONG-----')
-#     return render_template('add_song.html')
-
-
-# @app.route('/pofile/edit_song')
-# def edit_song():
-
-#     return render_template('edit_song.html')
-
-
-
-
-
 ########################################################
 # DELETE SONG        input: html profile, view song, song_id
-
 # DASHBOARD
 @app.route('/profile/delete_song/<int:song_id>')
 def delete_song(song_id):
@@ -268,21 +199,15 @@ def delete_song(song_id):
     }
 
     Song.delete_song(delete_data)
-    # Car.delete_car(delete_data)
 
     return redirect('/profile')
 
-
 @app.route('/profile/requests/<int:musician_id>')
 def request_page(musician_id):
-    # DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
     if not 'musician_id' in session:
         print('FAILED MUSICIAN SESSION VALIDATION')
         return redirect('/')
-    # if not 'band_id' in session:
-    #     print('FAILED MUSICIAN SESSION VALIDATION')
-    #     return redirect('/')
-# call a join request for musician and band
+
     print('----CHECKING FOR MUSICIAN ID IN GIG REQUESTS----')
     pprint.pprint(musician_id)
 
@@ -293,19 +218,11 @@ def request_page(musician_id):
     print('----MUSICIAN ID DICT-----')
     pprint.pprint(musician_id_dict)
 
-
-# pass in band and chart query
-
-
-# pass request to html
-
     return render_template('musician_request.html', bands = Musician.get_all_band_w_musician(musician_id_dict))
-
 
 
 ########################################################
 # DELETE BAND REQUEST        input: html musician_request, band_id musician_id
-
 @app.route('/profile/requests/decline/<int:musician_id>/<int:band_id>')
 def delete_band_request(musician_id, band_id):
 
@@ -328,25 +245,17 @@ def delete_band_request(musician_id, band_id):
     return redirect(f'/profile/requests/{musician_id}')
 
 
-
 @app.route('/profile/requests/view/chart/<int:musician_id>/<int:band_id>')
 def view_band_chart(musician_id, band_id):
-    # DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
     if not 'musician_id' in session:
         print('FAILED MUSICIAN SESSION VALIDATION')
         return redirect('/')
-    # if not 'band_id' in session:
-    #     print('FAILED MUSICIAN SESSION VALIDATION')
-    #     return redirect('/')
+
     print('------MUSICIAN ID FOR CHART PULL------')
     print(musician_id)
 
     print('------BAND ID FOR CHART PULL------')
     print(band_id)
-
-
-    # Musician.view_band_charts()
-    # print('---TESTING MUSICIAN VIEW CHART BAND_ID----')
 
     show_data = {
         'id' : band_id
@@ -363,39 +272,39 @@ def view_band_chart(musician_id, band_id):
 
     print('----BAND NAME FROM CHARTS------')
     band_name = Band.show_band(show_data)
-    # name = band_name.name
     pprint.pprint(band_name)
-    # band_name
-
 
     return render_template('musician_request.html', charts = band_charts, bands = Musician.get_all_band_w_musician(musician_id_dict), band_name = band_name)
 
-    
 
 @app.route('/profile/upload/image_page')
 def upload_image_page():
     print('---MADE IT TO UPLOAD PAGE-----')
-
 
     return render_template('upload_image.html')
 
 
 @app.route('/profile/add/image', methods = ['POST'])
 def add_image():
-
     print('-----MADE IT TO UPLOAD ROUTE------')
 
+    print('----PROFILE PIC REQUEST FORM----')
+    print(request.files)
 
-#   following section move to musician model? is model needed? yes, saving string to db. Pass class attributes as hidden input?
     # image
     profile_pic = request.files['profile_pic']
+    print('------PROFILE_PIC------')
     print(profile_pic)
 
     #image name/secure filename
     pic_filename = secure_filename(profile_pic.filename)
+    print('------PIC_FILENAME------')
     print(pic_filename)
 
-
+    if not Musician.validate_profile_img(request.files):
+        print('FAILED PROFILE PICTURE VALIDATE')
+        flash('File upload failed, please try again.')
+        return redirect('/profile/upload/image_page')
 
     #multiple same file names
     #set uuid
@@ -403,57 +312,40 @@ def add_image():
     print('-----PROFILE PIC NAME------')
     print(pic_name)
 
-    dir_name = os.path.dirname(__file__)
+    app_root = os.path.dirname(os.path.abspath(__file__))
+    trim_app_root = app_root.split("controllers")
+    print(trim_app_root)
+
+    UPLOAD_FOLDER = os.path.join(trim_app_root[0], 'static', 'assests', 'img', 'profile')
     print('-----DIR_NAME----')
-    print(dir_name)
+    print(app_root)
+    print(UPLOAD_FOLDER)
 
-    correct_dir = 
-    test_path = os.path.join(dir_name, app.config['UPLOAD_FOLDER'], pic_name)
-
-
-    # test_path = os.path.join(app.config['UPLOAD_FOLDER'], pic_name)
+    test_path = os.path.join(UPLOAD_FOLDER, pic_name)
     print('----TEST PATH FOR PIC------')
-    # print(test_path)
+    print(test_path)
 
     # save image
-    # profile_pic.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+    profile_pic.save(os.path.join(UPLOAD_FOLDER, pic_name))
 
     #set pic_name string to file
     profile_pic = pic_name
-    
 
 #   dict for musician_model UPDATE query
     pic_dict = {
         'id' : session['musician_id'],
-        # 'first_name' : request.form['first_name'],
-        # 'last_name' : request.form['last_name'],
-        # 'email' : request.form['email'],
-        # 'password' : request.form['password'],
-        # 'created_at' : request.form['created_at'],
-        # 'updated_at' : request.form['updated_at'],
-        # 'genre' : request.form['genre'],
-        # 'city' : request.form['city'],
-        # 'state' : request.form['state'],
-        # 'experience' : request.form['experience'],
-        # 'description' : request.form['description'],
-        # 'instrument' : request.form['instrument'],
-        # 'availability' : request.form['availability'],
         'profile_pic' : profile_pic
     }
 
     print('------PIC DICT------')
     pprint.pprint(pic_dict)
 
-    # Musician.add_image(pic_dict)
+    Musician.add_image(pic_dict)
 
     return redirect('/profile')
-
-
-
 
 
 @app.route('/logout')
 def logout():
     session.clear()
     return redirect('/')
-

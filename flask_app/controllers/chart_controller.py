@@ -9,10 +9,6 @@ import pprint
 
 @app.route('/band/add_chart')
 def add_chart_page():
-    # DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
-    # if not 'musician_id' in session:
-    #     print('FAILED MUSICIAN SESSION VALIDATION')
-    #     return redirect('/')
     if not 'band_id' in session:
         print('FAILED MUSICIAN SESSION VALIDATION')
         return redirect('/')
@@ -42,17 +38,11 @@ def create_chart():
     return redirect('/band/requests')
 
 
-
 @app.route('/band/edit_chart/<int:chart_id>')
 def edit_chart_page(chart_id):
-    # DASHBOARD: DISPLAY ALL SONGS WITH MUSICIAN
-    # if not 'musician_id' in session:
-    #     print('FAILED MUSICIAN SESSION VALIDATION')
-    #     return redirect('/')
     if not 'band_id' in session:
         print('FAILED MUSICIAN SESSION VALIDATION')
         return redirect('/')
-    # band_id = session['band_id']
 
     id_data = {
         'id' : chart_id
@@ -63,10 +53,7 @@ def edit_chart_page(chart_id):
     print('---------------CHART INFO PASSED TO HTML---------------')
     pprint.pprint(chart)
 
-
     return render_template('edit_chart.html', chart = chart)
-
-
 
 
 ########################################################
@@ -75,11 +62,11 @@ def edit_chart_page(chart_id):
 def update_chart():
     print('------UPDATING CHART------')
     pprint.pprint(request.form)
-    # car_id = session['car_id']
+    chart_id = request.form['chart_id']
 
-    # if not Car.validate_car(request.form):
-    #     print("FAILED UPDATE CAR VALIDATION")
-    #     return redirect(f'/edit_page/{car_id}')
+    if not Chart.validate_chart(request.form):
+        print("FAILED UPDATE CHART VALIDATION")
+        return redirect(f'/band/edit_chart/{chart_id}')
 
 #   setting up dict for query from request.form
     show_data = {
@@ -93,35 +80,7 @@ def update_chart():
     print('-------------UPDATE SHOW DATA-------------')
     pprint.pprint(show_data)
 
-# #   call update method
     Chart.update_chart(show_data)
 
     return redirect('/band/requests/')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

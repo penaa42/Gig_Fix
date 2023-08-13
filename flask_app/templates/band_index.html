@@ -12,16 +12,26 @@
     <title>Band Login</title>
 </head>
 <body>
+    <nav class = "navbar navbar-expand-lg d-lg-block" style = "background-color: black">
+        <div class = "container">
+            <h1 class = " text-white">Gig Fix</h1>
+            <div class = "navbar-inline">
+                <ul class = "navbar-nav ">
+                    <li class = "nav-item active mx-5">
+                        <a class = "nav-link text-white" href = "/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
     <div id = "intro">
         <div class = "d-flex justified-content-evenly" style = "background-color: rgba(0, 0, 0, 0.8);">
-
             <div class = "container mask m-5">
                 <form action = "/band/register" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(35, 100, 138);" method = "post">
-                    <div >
+                    <div class = "p-2">
                         <h2 class = "text-center text-light">Register</h2>
-
-                        <div class = "text-light bg-danger rounded-4 m-4">
+                        <div class = "text-light text-center bg-danger rounded-4 m-4">
                             <!-- <div class = ""> -->
                                 {% with messages = get_flashed_messages(category_filter = ["category1"]) %}
                                 <!-- declare a variable called messages -->
@@ -36,23 +46,28 @@
                                 {% endwith %}
                             <!-- </div> -->
                         </div>
-    
+
                         <div class = "m-4">
                             <label for = "name" class = "form-label text-light">Name:</label>
-                            <input type = "text" class = "form-control  mb-2" name = "name" placeholder = "Enter Band Name">
-    
+                            <input type = "text" class = "form-control" name = "name" placeholder = "Enter Band Name">
+                            <br/>
+
                             <label for = "city" class = "form-label text-light">City:</label>
-                            <input type = "text" class = "form-control  mb-2" name = "city" placeholder = "Enter Gig City">
+                            <input type = "text" class = "form-control" name = "city" placeholder = "Enter Gig City">
+                            <br/>
 
                             <label for = "state" class = "form-label text-light">State:</label>
-                            <input type = "text" class = "form-control  mb-2" name = "state" placeholder = "Enter Gig State">
-    
+                            <input type = "text" class = "form-control" name = "state" placeholder = "Enter Gig State">
+                            <br/>
+
                             <label for = "email" class = "form-label text-light">Email:</label>
-                            <input type = "email" class = "form-control  mb-2" name = "email" placeholder = "Enter Email">
-    
+                            <input type = "email" class = "form-control" name = "email" placeholder = "Enter Email">
+                            <br/>
+
                             <label for = "password" class = "form-label text-light">Password:</label>
-                            <input type = "password" class = "form-control  mb-2" name = "password" placeholder = "Enter Password">
-    
+                            <input type = "password" class = "form-control" name = "password" placeholder = "Enter Password">
+                            <br/>
+
                             <label for = "confirm_password" class = "form-label text-light">Confirm Password:</label>
                             <input type = "password" class = "form-control  mb-2" name = "confirm_password" placeholder = "Confirm Password">
                         </div>
@@ -60,12 +75,12 @@
                     </div>
                 </form>
             </div>
-    
+
             <div class = "container m-5">
                 <form action = "/band/login" class = "rounded-4 shadow-5-strong" style = "background-color: rgb(35, 100, 138);" method = "post">
-                    <div>
+                    <div class = "p-2">
                         <h2 class = "text-center text-light">Login</h2>
-                        <div class = "text-light bg-danger rounded-4 m-4">
+                        <div class = "text-light text-center bg-danger rounded-4 m-4">
                             <!-- <div class = ""> -->
                                 {% with messages = get_flashed_messages(category_filter = ["category2"]) %}
                                 <!-- declare a variable called messages -->
@@ -73,18 +88,19 @@
                                 <!-- check if there are any messages -->
                                         {% for message in messages %}
                                 <!-- loop through the messages -->
-                                        <p>{{message}}</p>
+                                        <p class = "p-2">{{message}}</p>
                                 <!-- display each message in a paragraph tag -->
                                         {% endfor %}
                                     {% endif %}
                                 {% endwith %}
-                                <!-- </div> -->                    
+                                <!-- </div> -->
                         </div>
 
                         <div class = "m-4">
                             <label for = "" class = "form-label text-light">Email:</label>
-                            <input type = "email" class = "form-control mb-2" name = "email" placeholder = "Enter Email">
-                            
+                            <input type = "email" class = "form-control" name = "email" placeholder = "Enter Email">
+                            <br/>
+
                             <label for = "" class = "form-label my-2 text-light">Password:</label>
                             <input type = "password" class = "form-control mb-2" name = "password" placeholder = "Enter Password">
                         </div>

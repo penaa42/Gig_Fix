@@ -30,7 +30,6 @@ class Musician:
         self.description = data['description']
         self.instrument = data['instrument']
         self.availability = data['availability']
-        #possible delete
         #db is saving image as a string
         self.profile_pic = data['profile_pic']
         self.songs = []
@@ -38,7 +37,6 @@ class Musician:
 
     def __repr__(self) -> str:
         return f'Musician Repr ---------------> ID: {self.id} FIRST NAME: {self.first_name} SONGS: {self.songs}'
-
 
 ###############################################################################################3
 # 8) validate musician
@@ -67,8 +65,8 @@ class Musician:
             flash('Please use state abbreviation!', 'category1')
             is_valid = False
 
-        if len(form_data['experience']) < 0:
-            flash('Experience cannot be less than 0!', 'category1')
+        if form_data['experience'] == "":
+            flash('Experience was left empty! Please add your experience', 'category1')
             is_valid = False
 
         if len(form_data['availability']) < 3:
@@ -79,17 +77,21 @@ class Musician:
             flash('Password must be at least 8 characters long!', 'category1')
             is_valid = False
 
+        if len(form_data['instrument']) < 4:
+            flash('Instrument cannot be less than 4 characters!', 'category1')
+            is_valid = False
+
+        if len(form_data['description']) == 0:
+            flash('Please add your description', 'category1')
+            is_valid = False
+
         if not EMAIL_REGEX.match(form_data['email']): 
             flash('Invalid email/password!', 'category1')
             is_valid = False
-        
+
         if form_data['password'] != form_data['confirm_password']:
             flash('Invalid email/password!', 'category1')
             is_valid = False
-
-        # if len(form_data['profile_pic']) == 0:
-        #     flash('Please select profile picture', 'category1')
-        #     is_valid = False
 
         return is_valid
 
@@ -110,8 +112,6 @@ class Musician:
         # creating an instance from the query result (db_response)
         return cls(db_response[0])
 
-
-
 ########################################################
 # CREATE MUSICIAN         musician_controller; route: /musician/register; INSERT QUERY(request.form input)
     @classmethod
@@ -121,8 +121,8 @@ class Musician:
 
         print('-----------CREATE MUSICIAN DB RESPONSE-----------')
         pprint.pprint(db_response)
-        return db_response
 
+        return db_response
 
 ########################################################
 # GET ALL MUSICIANS     band_controller; route: /dashboard; SELECT query(no input)
@@ -140,45 +140,10 @@ class Musician:
             new_musician = cls(musician)
             musicians.append(new_musician)
 
-        # for musician in db_response:
-#           reconstruct dict data to grab correct id in db_response for Car class (class association setup)
-#             car_data = {
-#                 'id' : car_and_user['cars.id'],
-#                 'price' : car_and_user['price'],
-#                 'model' : car_and_user['model'],
-#                 'make' : car_and_user['make'],
-#                 'year' : car_and_user['year'],
-#                 'description' : car_and_user['description'],
-#                 'created_at' : car_and_user['created_at'],
-#                 'updated_at' : car_and_user['updated_at'],
-#                 'user_id' : car_and_user['user_id']
-# #                leave out seller class association
-#             }
-
-#           band dict turned into band class instance (no class association yet)
-#             new_ = cls(car_data)
-#             # print('----------CAR DATA INTO NEW CAR CLASS----------')
-#             pprint.pprint(new_car)
-
-# #           bringing in class association (user class placed in car attribute 'self.seller')
-#             new_car.seller = user_model.User(car_and_user)
-#             # print('------------CHECKING SELLER ATTRIBUTE CLASS ASSOCIATION------------')
-#             pprint.pprint(new_car.seller)
-
-# #           adding new_car class instance to cars list
-#             cars.append(new_car)
-
-#         # print('---------CHECKING LIST OF CAR INSTANCES IN GET ALL----------')
-#         pprint.pprint(cars)
         print('-----CHECKING GET ALL MUSICIANS LIST-----')
         pprint.pprint(musicians)
 
         return musicians
-
-
-
-
-
 
 ########################################################
 # SHOW MUSICIAN         musician_controller; route: /profile; input id_data dict; SELECT QUERY(musician_id input)
@@ -196,11 +161,8 @@ class Musician:
 
         for musician in db_response:
             new_musician = cls(musician)
-            # musicians.append(new_musician)
 
         return new_musician
-
-
 
     @staticmethod
     def validate_musician_update(form_data):
@@ -226,15 +188,24 @@ class Musician:
             flash('Please use state abbreviation!', 'category1')
             is_valid = False
 
-        if len(form_data['experience']) < 0:
-            flash('Experience cannot be less than 0!', 'category1')
+        if form_data['experience'] == "":
+            flash('Experience was left empty! Please add your experience!', 'category1')
             is_valid = False
 
         if len(form_data['availability']) < 3:
             flash('Availability cannot be less than 3 characters!', 'category1')
             is_valid = False
 
+        if len(form_data['instrument']) < 4:
+            flash('Instrument cannot be less than 4 characters!', 'category1')
+            is_valid = False
+
+        if len(form_data['description']) == 0:
+            flash('Please add your description', 'category1')
+            is_valid = False
+
         return is_valid
+
 ########################################################
 # UPDATE MUSICIAN        musician_controller; route: /profile/update; input html request.form
     @classmethod
@@ -246,9 +217,6 @@ class Musician:
 
         return db_response
 
-
-
-
 ########################################################
 # GET MUSICIAN WITH BANDS     musician_controller; input: musician_id; route: /profile/requests/<int:musician_id>
     @classmethod
@@ -258,7 +226,6 @@ class Musician:
         pprint.pprint(musician_id_dict)
 
         query = "SELECT * FROM bands JOIN bands_musicians ON bands.id = bands_musicians.band_id JOIN musicians ON musicians.id = bands_musicians.musician_id;"
-        # print(query)
 
         db_response = connectToMySQL(db).query_db(query)
 
@@ -291,8 +258,6 @@ class Musician:
 
         return bands
 
-
-
 ########################################################
 # DELETE BAND FROM MUSICIAN REQUESTS     musician_controller; input: band_id, musician_id; route: /profile/requests/decline/<int:band_id>/<int:musician_id>
     @classmethod
@@ -301,16 +266,12 @@ class Musician:
         print('-----DELETE DATA FROM MUSICIAN DELETE BAND DICT -----')
         pprint.pprint(delete_data)
 
-
-    #  grab id where band_id and musician_id are the same
-        # print('-----PRINTING NEW QUERY-----')
-
         query = '''DELETE FROM bands_musicians 
-        
+
         WHERE musician_id = %(musician_id)s 
-        
+
         AND band_id = %(band_id)s'''
-        
+
         pprint.pprint(query)
 
         db_response = connectToMySQL(db).query_db(query, delete_data)
@@ -319,36 +280,20 @@ class Musician:
 
         return
 
-
-
 ########################################################
 # PROFILE PIC     musician_controller; input: request.form; route: /profile/upload
     @classmethod
     def add_image(cls, pic_dict):
-        # profile_pic = request.files['profile_pic']
 
-        # #image name/secure filename
-        # pic_filename = secure_filename(profile_pic.filename)
-
-        # #multiple same file names
-        # #set uuid
-        # pic_name = str(uuid.uuid1()) + "_" + pic_filename
-
-        # #set pic_name string to file
-        # profile_pic = pic_name
-
-        # print('-----PROFILE PIC NAME------')
-        # print(profile_pic)
-        
         print('------PIC CLASSMETHOD REQUEST FORM------')
         pprint.pprint(pic_dict)
 
         query = '''UPDATE musicians SET 
-        
+
         profile_pic = %(profile_pic)s 
-        
+
         WHERE id = %(id)s'''
-        
+
         print('-----PIC QUERY------')
         pprint.pprint(query)
 
@@ -356,7 +301,31 @@ class Musician:
         print('------PIC DB RESPONSE-----')
         pprint.pprint(db_response)
 
-
         return
 
+    @staticmethod
+    def validate_profile_img(form_data):
+        is_valid = True
 
+        print('-----MUSICIAN MODEL FORM DATA----')
+        print(len(form_data))
+
+        profile_pic = form_data['profile_pic']
+        print('------MUSICIAN MODEL PROFILE_PIC----')
+        print(profile_pic)
+
+        pic_filename = secure_filename(profile_pic.filename)
+        print('------MUSICIAN MODEL PIC_FILENAME-----')
+        print(pic_filename)
+
+        ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+
+        if len(pic_filename) < 1:
+            flash('File was not selected, please select a photo!')
+            is_valid = False
+
+        elif pic_filename.rsplit('.', 1)[1].lower() not in ALLOWED_EXTENSIONS:
+            flash('Incorrect file type selected, please select png, jpg, jpeg, or gif file')
+            is_valid = False
+
+        return is_valid
