@@ -1,7 +1,7 @@
 from flask_app.config.mysqlconnection import connectToMySQL
 from flask_app.models import musician_model
 from flask import flash
-from datetime import datetime
+from datetime import datetime, date
 import re
 import pprint
 
@@ -29,21 +29,15 @@ class Song:
         is_valid = True
 
         today = datetime.today()
-        print("TODAY'S DATE: ", today)
-
-
-        print("TYPE TODAY",type(today))
-        print("TYPE FORM DATE",type(form_data['date']))
         date_format = "%Y-%m-%d"
-        date_obj = datetime.strptime(form_data['date'], date_format).date()
-        print('CONVERTED STRING TO DATETIME',date_obj)
-        print('CONVERTED TYPE',type(date_obj))
+        form_date_conv = datetime.strptime(form_data['date'], date_format).date()
+        converted_today = datetime.date(today)
 
         if form_data['date'] == "":
             flash('Date is required, please enter Performance Date.')
             is_valid = False
 
-        if date_obj > today:
+        if form_date_conv > converted_today:
             print('checking')
             flash('Please enter a date previous from today.')
             is_valid = False
